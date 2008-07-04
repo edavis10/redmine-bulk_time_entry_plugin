@@ -3,6 +3,11 @@
 <p>Enter your time entries here</p>
 
 <% labelled_tabular_form_for :bulk_time_entry, @bulk_time_entry, :url => {:action => 'save'} do |f| %>
-  <%= render :partial => 'time_entry', :collection => @time_entries %>
+  <div id="entries">
+    <%= render :partial => 'time_entry', :collection => @time_entries %>
+  </div>
+  <div id="add-entry">
+    <%= link_to_remote  "Add another", :url => { :action => 'entry_form' }, :html => { :accesskey => 'a'} %>
+  </div>
   <%= submit_tag l(:button_save) %>
 <% end %>

@@ -7,7 +7,7 @@ class BulkTimeEntriesController < ApplicationController
     # TODO: Check projects isn't empty
     @activities = Enumeration::get_values('ACTI')
     @projects = Project.find(:all) # TODO: Filter
-    @time_entries = [TimeEntry.new, TimeEntry.new]
+    @time_entries = [TimeEntry.new]
   end
   
   def save
@@ -23,5 +23,14 @@ class BulkTimeEntriesController < ApplicationController
       flash[:notice] = l(:notice_successful_update)
     end    
     redirect_to :action => 'index'
+  end
+  
+  def entry_form
+    @activities = Enumeration::get_values('ACTI')
+    @projects = Project.find(:all) # TODO: Filter
+    @time_entry = TimeEntry.new
+    respond_to do |format|
+      format.js {  render :action => 'entry_form.js.rjs' }
+    end
   end
 end
