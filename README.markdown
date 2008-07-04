@@ -1,5 +1,3 @@
-== Empty plugin
+## Bulk Time Entry Plugin
 
-This is an empty plugin based on the sample plugin for Redmine.  Use it
-to help create your own custom plugin
-
+This is a plugin to help enter multiple timelogs at one time

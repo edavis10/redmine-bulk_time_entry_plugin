@@ -1,13 +1,11 @@
 # Empty redmine plguin
 require 'redmine'
 
-# TODO: Change this to use the name of your plugin
-RAILS_DEFAULT_LOGGER.info 'Starting Empty plugin for RedMine'
+RAILS_DEFAULT_LOGGER.info 'Starting Bulk Time Entry Plugin for RedMine'
 
-# TODO: Change the name 
-Redmine::Plugin.register :empty_plugin do
-  name 'Empty plugin'
+Redmine::Plugin.register :bulk_time_entry do
+  name 'Bulk Time Entry'
   author 'Eric Davis'
-  description 'This is an empty plugin for Redmine that is used to start new plugins'
+  description 'This is a plugin to help enter multiple timelogs at one time'
   version '0.0.0'
 end
