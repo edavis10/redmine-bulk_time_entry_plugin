@@ -1,3 +1,10 @@
 <h1>Bulk Time Entries</h1>
 
 <p>Enter your time entries here</p>
+
+  <% form_tag({ :action => 'save' }, { :method => :post }) do |f| %>
+
+  <%= render :partial => 'time_entry', :locals => { :f => f} %>
+  <%# TODO: Allow additional entries %>
+  <%= submit_tag l(:button_save) %>
+<% end %>
