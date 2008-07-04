@@ -2,22 +2,24 @@
   <%# TODO: Add project %>
   <%# TODO: JS suggest for issue_id %>
   <p>
-    <label for="time_entry[issue_id][]">Issue</label>
-    <%= text_field_tag 'time_entry[issue_id][]', '', :size => 6 %>
+    <%= label_for_field :issue_id %>
+    <%= entry.text_field :issue_id, :size => 6 %>
   </p>
   <p>
-    <label for="time_entry[issue_id][]">Date</label>
-    <%= text_field_tag 'time_entry[spent_on][]', '', :size => 10, :required => true %><%= calendar_for('time_entry_spent_on') %>
+    <%= label_for_field :spent_on, :requried => true %>
+    <%= entry.text_field :spent_on, :size => 10, :required => true %><%= calendar_for('time_entry_spent_on') %>
   </p>
   <p>
-    <label for="time_entry[issue_id][]">Hours</label>
-    <%= text_field_tag 'time_entry[hours][]', '', :size => 6, :required => true %>
+    <%= label_for_field :hours, :required => true %>
+    <%= entry.text_field :hours, :size => 6, :required => true %>
   </p>
   <p>
-    <label for="time_entry[issue_id][]">Comment</label>
-    <%= text_field_tag 'time_entry[comments][]', '', :size => 100 %>
+    <%= label_for_field :comments %>
+    <%= entry.text_field :comments, :size => 100 %>
   </p>
   <p>
-    <%= select :activity_id, (@activities.collect {|p| [p.name, p.id]}), :required => true %>
+    <%= label_for_field :activity_id, :required => true %>
+    <%= entry.select :activity_id, (@activities.collect {|p| [p.name, p.id]}), :required => true %>
   </p>
 </div>
+

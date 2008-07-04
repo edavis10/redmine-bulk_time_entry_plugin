@@ -2,9 +2,12 @@
 
 <p>Enter your time entries here</p>
 
-  <% form_tag({ :action => 'save' }, { :method => :post }) do |f| %>
+  <%# form_tag({ :action => 'save' }, { :method => :post }) do |f| %>
+  <% labelled_tabular_form_for :bulk_time_entry, @bulk_time_entry, :url => {:action => 'save'} do |f| %>
 
-  <%= render :partial => 'time_entry', :locals => { :f => f} %>
+  <% fields_for(:time_entry) do |entry| %>
+  <%= render :partial => 'time_entry', :locals => { :f => f, :entry => entry} %>
+  <% end %>
   <%# TODO: Allow additional entries %>
   <%= submit_tag l(:button_save) %>
 <% end %>
