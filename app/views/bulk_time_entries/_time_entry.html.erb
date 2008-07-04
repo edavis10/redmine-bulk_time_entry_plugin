@@ -1,12 +1,17 @@
+<% fields_for('time_entries[]', time_entry) do |entry| %>
 <div class="box">
   <%# TODO: Add project %>
   <%# TODO: JS suggest for issue_id %>
+  <p>
+    <%= label_for_field :project_id, :required => true %>
+    <%= entry.select :project_id, (@projects.collect { |p| [p.name, p.id]}), :required => true %>
+  </p>
   <p>
     <%= label_for_field :issue_id %>
     <%= entry.text_field :issue_id, :size => 6 %>
   </p>
   <p>
-    <%= label_for_field :spent_on, :requried => true %>
+    <%= label_for_field :spent_on, :required => true %>
     <%= entry.text_field :spent_on, :size => 10, :required => true %><%= calendar_for('time_entry_spent_on') %>
   </p>
   <p>
@@ -23,3 +28,4 @@
   </p>
 </div>
 
+<% end %>
