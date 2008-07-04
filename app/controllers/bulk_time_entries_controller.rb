@@ -3,6 +3,5 @@ class BulkTimeEntriesController < ApplicationController
   layout 'base'
   
   def index
-    render :text => 'hi'
   end
 end
