@@ -1,7 +1,5 @@
 <h1>Bulk Time Entries</h1>
 
-<p>Enter your time entries here</p>
-
 <% labelled_tabular_form_for :bulk_time_entry, @bulk_time_entry, :url => {:action => 'save'} do |f| %>
   <div id="entries">
     <%= render :partial => 'time_entry', :collection => @time_entries %>
