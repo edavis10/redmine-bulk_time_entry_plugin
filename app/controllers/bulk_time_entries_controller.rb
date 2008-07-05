@@ -17,12 +17,14 @@ class BulkTimeEntriesController < ApplicationController
     if request.post? 
       @time_entries = params[:time_entries]
       @time_entries.each do |entry|
+        next unless allowed_project?(entry[:project_id])
+        
         @time_entry = TimeEntry.new(entry)
-        # TODO: Verify user has permissions for project
         @time_entry.project_id = entry[:project_id] # project_id is protected from mass assignment
         @time_entry.user = User.current
         # TODO: Display saved state in flash like bulk issue edit
         @time_entry.save
+
       end
       flash[:notice] = l(:notice_successful_update)
     end    
@@ -45,5 +47,9 @@ class BulkTimeEntriesController < ApplicationController
   
   def allowed_projects
     User.current.projects.find(:all, Project.allowed_to_condition(User.current, :log_time))
+  end
+  
+  def allowed_project?(project_id)
+    return User.current.projects.find_by_id(project_id, Project.allowed_to_condition(User.current, :log_time))
   end
 end
