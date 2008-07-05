@@ -3,10 +3,10 @@ class BulkTimeEntriesController < ApplicationController
   layout 'base'
   
   def index
-    # TODO: Get list of projects user has permission
     # TODO: Check projects isn't empty
     @activities = Enumeration::get_values('ACTI')
-    @projects = Project.find(:all) # TODO: Filter
+    @projects = User.current.projects.find(:all, Project.allowed_to_condition(User.current, :log_time))
+    
     @time_entries = [TimeEntry.new]
   end
   
@@ -15,6 +15,7 @@ class BulkTimeEntriesController < ApplicationController
       @time_entries = params[:time_entries]
       @time_entries.each do |entry|
         @time_entry = TimeEntry.new(entry)
+        # TODO: Verify user has permissions for project
         @time_entry.project_id = entry[:project_id] # project_id is protected from mass assignment
         @time_entry.user = User.current
         # TODO: Display saved state in flash like bulk issue edit
@@ -27,7 +28,7 @@ class BulkTimeEntriesController < ApplicationController
   
   def entry_form
     @activities = Enumeration::get_values('ACTI')
-    @projects = Project.find(:all) # TODO: Filter
+    @projects = User.current.projects.find(:all, Project.allowed_to_condition(User.current, :log_time))
     @time_entry = TimeEntry.new
     respond_to do |format|
       format.js {  render :action => 'entry_form.js.rjs' }
