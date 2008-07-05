@@ -4,7 +4,7 @@
   <%# TODO: JS suggest for issue_id %>
   <p>
     <%= label_for_field :project_id, :required => true %>
-    <%= entry.select :project_id, (@projects.collect { |p| [p.name, p.id]}), :required => true %>
+    <%= entry.select :project_id, (@projects.sort.collect { |p| [p.name, p.id]}), :required => true %>
   </p>
   <p>
     <%= label_for_field :issue_id %>
