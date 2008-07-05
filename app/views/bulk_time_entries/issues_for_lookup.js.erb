@@ -1,0 +1,5 @@
+var issues = new Array(<%= @issues.size %>);
+
+<% @issues.each_with_index do |issue, index| -%>
+  issues[<%= index %>] = "<%= issue.id %>";
+<% end -%>
