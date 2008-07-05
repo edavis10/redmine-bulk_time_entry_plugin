@@ -1,15 +1,16 @@
 class BulkTimeEntriesController < ApplicationController
   unloadable
   layout 'base'
+  before_filter :set_activities, :except => :save
+  before_filter :allowed_projects, :except => :save
   
   def index
-    @activities = Enumeration::get_values('ACTI')
-    @projects = User.current.projects.find(:all, Project.allowed_to_condition(User.current, :log_time))
+    @projects = allowed_projects
+    @time_entries = [TimeEntry.new]
 
     if @projects.empty?
       render :action => 'no_projects'
     end
-    @time_entries = [TimeEntry.new]
   end
   
   def save
@@ -29,11 +30,20 @@ class BulkTimeEntriesController < ApplicationController
   end
   
   def entry_form
-    @activities = Enumeration::get_values('ACTI')
-    @projects = User.current.projects.find(:all, Project.allowed_to_condition(User.current, :log_time))
+    @projects = allowed_projects
     @time_entry = TimeEntry.new
     respond_to do |format|
       format.js {  render :action => 'entry_form.js.rjs' }
     end
+  end
+  
+  private
+
+  def set_activities
+    @activities = Enumeration::get_values('ACTI')    
+  end
+  
+  def allowed_projects
+    User.current.projects.find(:all, Project.allowed_to_condition(User.current, :log_time))
   end
 end
