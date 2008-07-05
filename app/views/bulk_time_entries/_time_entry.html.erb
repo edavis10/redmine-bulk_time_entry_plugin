@@ -9,8 +9,6 @@
   <p>
     <%= label_for_field :issue_id %>
     <%= entry.text_field :issue_id, :size => 6 %>
-    <div class="auto_complete" id="issue_lookup_autocomplete">foo</div>
-    <%= javascript_tag("new Autocompleter.Local('time_entries__issue_id', 'issue_lookup_autocomplete',issues, {fullSearch: true, frequency: 0, minChars: 1});") %>
   </p>
   <p>
     <%= label_for_field :spent_on, :required => true %>

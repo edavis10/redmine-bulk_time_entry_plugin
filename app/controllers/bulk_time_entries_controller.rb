@@ -34,10 +34,4 @@ class BulkTimeEntriesController < ApplicationController
       format.js {  render :action => 'entry_form.js.rjs' }
     end
   end
-  
-  def issues_for_lookup
-    @issues = User.current.projects.find(:all, Project.allowed_to_condition(User.current, :log_time)).collect(&:issues).flatten
-    headers['content-type'] = 'text/javascript'
-    render :layout => false, :action => 'issues_for_lookup.js.erb'
-  end
 end
