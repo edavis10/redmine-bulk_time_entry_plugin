@@ -3,10 +3,12 @@ class BulkTimeEntriesController < ApplicationController
   layout 'base'
   
   def index
-    # TODO: Check projects isn't empty
     @activities = Enumeration::get_values('ACTI')
     @projects = User.current.projects.find(:all, Project.allowed_to_condition(User.current, :log_time))
-    
+
+    if @projects.empty?
+      render :action => 'no_projects'
+    end
     @time_entries = [TimeEntry.new]
   end
   
