@@ -35,7 +35,11 @@ class BulkTimeEntriesController < ApplicationController
     #@projects = allowed_projects
     @time_entry = TimeEntry.new
     respond_to do |format|
-      format.js {  render :action => 'entry_form.js.rjs' }
+      format.js { 
+        render :update do |page| 
+          page.insert_html :bottom, 'entries', :partial => 'time_entry', :object => @time_entry
+        end
+      }
     end
   end
   
