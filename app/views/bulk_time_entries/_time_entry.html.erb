@@ -1,31 +1,34 @@
 <% fields_for('time_entries[]', time_entry) do |entry| %>
-<div class="box">
-  <%# TODO: Add project %>
-  <%# TODO: JS suggest for issue_id %>
-  <p>
-    <%= label_for_field :project_id, :required => true %>
-    <%= entry.select :project_id, (@projects.sort.collect { |p| [p.name, p.id]}), :required => true %>
-  </p>
-  <p>
-    <%= label_for_field :issue_id %>
-    <%= entry.text_field :issue_id, :size => 6 %>
-  </p>
-  <p>
-    <%= label_for_field :spent_on, :required => true %>
-    <%= entry.text_field :spent_on, :size => 10, :required => true %><%= calendar_for('time_entries__spent_on') %>
-  </p>
-  <p>
-    <%= label_for_field :hours, :required => true %>
-    <%= entry.text_field :hours, :size => 6, :required => true %>
-  </p>
-  <p>
-    <%= label_for_field :comments %>
-    <%= entry.text_field :comments, :size => 100 %>
-  </p>
-  <p>
-    <%= label_for_field :activity_id, :required => true %>
-    <%= entry.select :activity_id, (@activities.collect {|p| [p.name, p.id]}), :required => true %>
-  </p>
-</div>
+  <div class="box" id="entry_<%= rnd = rand(200) %>">
+    <%# TODO: Add project %>
+    <%# TODO: JS suggest for issue_id %>
+    <p>
+      <%= label_for_field :project_id, :required => true %>
+      <%= entry.select :project_id, (@projects.sort.collect { |p| [p.name, p.id]}), :required => true %>
+    </p>
+    <p>
+      <%= label_for_field :issue_id %>
+      <%= entry.text_field :issue_id, :size => 6 %>
+    </p>
+    <p>
+      <%= label_for_field :spent_on, :required => true %>
+      <%= entry.text_field :spent_on, :size => 10, :required => true, :id => "time_entries_#{rnd}_spent_on" %><%= calendar_for("time_entries_#{rnd}_spent_on") %>
+    </p>
+    <p>
+      <%= label_for_field :hours, :required => true %>
+      <%= entry.text_field :hours, :size => 6, :required => true %>
+    </p>
+    <p>
+      <%= label_for_field :comments %>
+      <%= entry.text_field :comments, :size => 100 %>
+    </p>
+    <p>
+      <%= label_for_field :activity_id, :required => true %>
+      <%= entry.select :activity_id, (@activities.collect {|p| [p.name, p.id]}), :required => true %>
+    </p>
+    <% time_entry.custom_field_values.each do |value| %>
+      <p><%= custom_field_tag_with_label :time_entry, value %></p>
+    <% end %>
+  </div>
 
 <% end %>
