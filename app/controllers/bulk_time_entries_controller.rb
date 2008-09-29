@@ -5,7 +5,7 @@ class BulkTimeEntriesController < ApplicationController
   before_filter :allowed_projects, :except => :save
   
   def index
-    @projects = allowed_projects
+    #@projects = allowed_projects
     @time_entries = [TimeEntry.new]
 
     if @projects.empty?
@@ -32,7 +32,7 @@ class BulkTimeEntriesController < ApplicationController
   end
   
   def entry_form
-    @projects = allowed_projects
+    #@projects = allowed_projects
     @time_entry = TimeEntry.new
     respond_to do |format|
       format.js {  render :action => 'entry_form.js.rjs' }
@@ -46,7 +46,7 @@ class BulkTimeEntriesController < ApplicationController
   end
   
   def allowed_projects
-    User.current.projects.find(:all, Project.allowed_to_condition(User.current, :log_time))
+    @projects = User.current.projects.find(:all, Project.allowed_to_condition(User.current, :log_time))
   end
   
   def allowed_project?(project_id)
