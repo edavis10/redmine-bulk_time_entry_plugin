@@ -29,7 +29,6 @@ class BulkTimeEntriesController < ApplicationController
             load_allowed_projects
             page.replace "entry_#{html_id}", :partial => 'time_entry', :object => @time_entry
           else
-            page.replace_html "entry_#{html_id}_message", ''
             page.replace_html "entry_#{html_id}", '<div class="flash notice">' + l(:notice_successful_create) + '</div>'
           end
         end

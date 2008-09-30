@@ -2,7 +2,6 @@
   <div class="box" id="entry_<%= rnd = rand(9999) %>">
     <%# TODO: Add project %>
     <%# TODO: JS suggest for issue_id %>
-    <div id="entry_<%= rnd %>_message"></div>
     <%= error_messages_for 'time_entry' %>
     <p>
       <%= label_for_field :project_id, :required => true %>
