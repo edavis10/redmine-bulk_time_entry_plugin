@@ -1,12 +1,12 @@
 <% fields_for("time_entries[]", time_entry) do |f| %>
   <div class="box" id="entry_<%= rnd = rand(9999) %>">
-    <%# TODO: Add project %>
     <%# TODO: JS suggest for issue_id %>
     <div id="entry_<%= rnd %>_message"></div>
     <%= error_messages_for 'time_entry' %>
     <p>
       <%= label_for_field :project_id, :required => true %>
-      <%= f.select :project_id, (@projects.sort.collect{ |p| [p.name, p.id]}), {:required => true}, {:name => "time_entries[#{rnd}][project_id]"} %>
+      <%= f.select :project_id, (@projects.sort.collect{ |p| [p.name, p.id]}), {:required => true}, {:name => "time_entries[#{rnd}][project_id]"} %>&nbsp;
+      <%= link_to(l(:label_project_new), {:controller => 'projects', :action => 'add'}, :class => 'icon icon-add') if User.current.admin? %>  
     </p>
     <p>
       <%= label_for_field :issue_id %>
