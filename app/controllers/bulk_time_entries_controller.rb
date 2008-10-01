@@ -5,7 +5,6 @@ class BulkTimeEntriesController < ApplicationController
   before_filter :load_allowed_projects
   
   def index
-    #@projects = load_allowed_projects
     @time_entries = [TimeEntry.new]
 
     if @projects.empty?
@@ -34,7 +33,6 @@ class BulkTimeEntriesController < ApplicationController
   end
     
   def add_entry
-    #@projects = load_allowed_projects
     @time_entry = TimeEntry.new
     respond_to do |format|
       format.js do
