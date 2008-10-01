@@ -1,6 +1,6 @@
 <h2><%= l(:label_bulk_time_entries) %></h2>
 
-<% remote_form_for :bulk_time_entry_title, @bulk_time_entry, :url => {:action => 'save'} do |f| %>
+<% remote_form_for :bulk_time_entry_title, @bulk_time_entry, :url => {:action => 'save'}, :html => {:class => 'tabular'} do |f| %>
   <div id="entries">
     <%= render :partial => 'time_entry', :collection => @time_entries %>
   </div>

@@ -1,8 +1,8 @@
 class BulkTimeEntriesController < ApplicationController
   unloadable
   layout 'base'
-  before_filter :load_activities, :except => :save
-  before_filter :load_allowed_projects, :except => :save
+  before_filter :load_activities
+  before_filter :load_allowed_projects
   
   def index
     #@projects = load_allowed_projects
@@ -23,13 +23,10 @@ class BulkTimeEntriesController < ApplicationController
           @time_entry = TimeEntry.new(entry)
           @time_entry.project_id = entry[:project_id] # project_id is protected from mass assignment
           @time_entry.user = User.current
-          # TODO: Display saved state in flash like bulk issue edit
           unless @time_entry.save
-            load_activities
-            load_allowed_projects
             page.replace "entry_#{html_id}", :partial => 'time_entry', :object => @time_entry
           else
-            page.replace_html "entry_#{html_id}", '<div class="flash notice">' + l(:notice_successful_create) + '</div>'
+            page.replace_html "entry_#{html_id}", "<div class='flash notice'>#{l(:text_time_added_to_project,@time_entry.hours)}#{" (#{@time_entry.comments})" unless @time_entry.comments.blank?}.</div>"
           end
         end
       end
