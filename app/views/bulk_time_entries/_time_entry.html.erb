@@ -1,34 +1,35 @@
-<% fields_for('time_entries[]', time_entry) do |entry| %>
-  <div class="box" id="entry_<%= rnd = rand(200) %>">
+<% fields_for("time_entries[]", time_entry) do |f| %>
+  <div class="box" id="entry_<%= rnd = rand(9999) %>">
     <%# TODO: Add project %>
     <%# TODO: JS suggest for issue_id %>
+    <div id="entry_<%= rnd %>_message"></div>
+    <%= error_messages_for 'time_entry' %>
     <p>
       <%= label_for_field :project_id, :required => true %>
-      <%= entry.select :project_id, (@projects.sort.collect { |p| [p.name, p.id]}), :required => true %>
+      <%= f.select :project_id, (@projects.sort.collect{ |p| [p.name, p.id]}), {:required => true}, {:name => "time_entries[#{rnd}][project_id]"} %>
     </p>
     <p>
       <%= label_for_field :issue_id %>
-      <%= entry.text_field :issue_id, :size => 6 %>
+      <%= f.text_field :issue_id, :size => 6, :name => "time_entries[#{rnd}][issue_id]" %>
     </p>
     <p>
       <%= label_for_field :spent_on, :required => true %>
-      <%= entry.text_field :spent_on, :size => 10, :required => true, :id => "time_entries_#{rnd}_spent_on" %><%= calendar_for("time_entries_#{rnd}_spent_on") %>
+      <%= f.text_field :spent_on, :size => 10, :required => true, :name => "time_entries[#{rnd}][spent_on]", :id => "time_entries_#{rnd}_spent_on" %><%= calendar_for("time_entries_#{rnd}_spent_on") %>
     </p>
     <p>
       <%= label_for_field :hours, :required => true %>
-      <%= entry.text_field :hours, :size => 6, :required => true %>
+      <%= f.text_field :hours, :size => 6, :required => true, :name => "time_entries[#{rnd}][hours]" %>
     </p>
     <p>
       <%= label_for_field :comments %>
-      <%= entry.text_field :comments, :size => 100 %>
+      <%= f.text_field :comments, :size => 100, :name => "time_entries[#{rnd}][comments]" %>
     </p>
     <p>
       <%= label_for_field :activity_id, :required => true %>
-      <%= entry.select :activity_id, (@activities.collect {|p| [p.name, p.id]}), :required => true %>
+      <%= f.select :activity_id, (@activities.collect {|p| [p.name, p.id]}), {:required => true}, {:name => "time_entries[#{rnd}][activity_id]"} %>
     </p>
     <% time_entry.custom_field_values.each do |value| %>
-      <p><%= custom_field_tag_with_label :time_entry, value %></p>
+      <p><%= custom_field_tag_with_label "time_entries[#{rnd}]", value %></p>
     <% end %>
   </div>
-
 <% end %>

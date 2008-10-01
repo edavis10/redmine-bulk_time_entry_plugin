@@ -1,11 +1,11 @@
 class BulkTimeEntriesController < ApplicationController
   unloadable
   layout 'base'
-  before_filter :set_activities, :except => :save
-  before_filter :allowed_projects, :except => :save
+  before_filter :load_activities, :except => :save
+  before_filter :load_allowed_projects, :except => :save
   
   def index
-    #@projects = allowed_projects
+    #@projects = load_allowed_projects
     @time_entries = [TimeEntry.new]
 
     if @projects.empty?
@@ -16,44 +16,50 @@ class BulkTimeEntriesController < ApplicationController
   def save
     if request.post? 
       @time_entries = params[:time_entries]
-      @time_entries.each do |entry|
-        next unless allowed_project?(entry[:project_id])
-        
-        @time_entry = TimeEntry.new(entry)
-        @time_entry.project_id = entry[:project_id] # project_id is protected from mass assignment
-        @time_entry.user = User.current
-        # TODO: Display saved state in flash like bulk issue edit
-        @time_entry.save
 
+      render :update do |page|
+        @time_entries.each_pair do |html_id, entry|
+          next unless BulkTimeEntriesController.allowed_project?(entry[:project_id])
+          @time_entry = TimeEntry.new(entry)
+          @time_entry.project_id = entry[:project_id] # project_id is protected from mass assignment
+          @time_entry.user = User.current
+          # TODO: Display saved state in flash like bulk issue edit
+          unless @time_entry.save
+            load_activities
+            load_allowed_projects
+            page.replace "entry_#{html_id}", :partial => 'time_entry', :object => @time_entry
+          else
+            page.replace_html "entry_#{html_id}_message", ''
+            page.replace_html "entry_#{html_id}", '<div class="flash notice">' + l(:notice_successful_create) + '</div>'
+          end
+        end
       end
-      flash[:notice] = l(:notice_successful_update)
     end    
-    redirect_to :action => 'index'
   end
-  
-  def entry_form
-    #@projects = allowed_projects
+    
+  def add_entry
+    #@projects = load_allowed_projects
     @time_entry = TimeEntry.new
     respond_to do |format|
-      format.js { 
+      format.js do
         render :update do |page| 
           page.insert_html :bottom, 'entries', :partial => 'time_entry', :object => @time_entry
         end
-      }
+      end
     end
   end
   
   private
 
-  def set_activities
-    @activities = Enumeration::get_values('ACTI')    
+  def load_activities
+    @activities = Enumeration::get_values('ACTI')  
   end
   
-  def allowed_projects
+  def load_allowed_projects
     @projects = User.current.projects.find(:all, Project.allowed_to_condition(User.current, :log_time))
   end
   
-  def allowed_project?(project_id)
+  def self.allowed_project?(project_id)
     return User.current.projects.find_by_id(project_id, Project.allowed_to_condition(User.current, :log_time))
   end
 end
