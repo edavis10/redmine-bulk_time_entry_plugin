@@ -7,7 +7,7 @@
     <%= error_messages_for 'time_entry' %>
     <p>
       <%= label_for_field :project_id, :required => true %>
-      <%= f.select :project_id, (@projects.sort.collect{ |p| [p.name, p.id]}), {:required => true} %>
+      <%= f.select :project_id, group_by_root_for_select(@projects) %>&nbsp;
     </p>
     <p>
       <%= label_for_field :issue_id %>
