@@ -5,7 +5,7 @@ class BulkTimeEntriesController < ApplicationController
   before_filter :load_allowed_projects
   
   def index
-    @time_entries = [TimeEntry.new]
+    @time_entries = [TimeEntry.new(:spent_on => Date.today.to_s)]
 
     if @projects.empty?
       render :action => 'no_projects'
@@ -33,7 +33,7 @@ class BulkTimeEntriesController < ApplicationController
   end
     
   def add_entry
-    @time_entry = TimeEntry.new
+    @time_entry = TimeEntry.new(:spent_on => Date.today.to_s)
     respond_to do |format|
       format.js do
         render :update do |page| 
