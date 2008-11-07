@@ -2,4 +2,4 @@ bulk_time_entry_title: Carica tempi
 label_bulk_time_entries: Registrazione multipla tempi
 label_bulk_time_add_another: aggiungine un'altro
 text_bulk_time_entry_permission: Non hai i permessi per aggiungere tempi a nessun progetto
-text_time_added_to_project: Aggiunte %d ore al progetto
+text_time_added_to_project: Aggiunte %.2f ore al progetto

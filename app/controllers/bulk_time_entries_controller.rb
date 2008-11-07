@@ -26,7 +26,7 @@ class BulkTimeEntriesController < ApplicationController
           unless @time_entry.save
             page.replace "entry_#{html_id}", :partial => 'time_entry', :object => @time_entry
           else
-            page.replace_html "entry_#{html_id}", "<div class='flash notice'>#{l(:text_time_added_to_project,@time_entry.hours)}#{" (#{@time_entry.comments})" unless @time_entry.comments.blank?}.</div>"
+            page.replace_html "entry_#{html_id}", "<div class='flash notice'>#{l(:text_time_added_to_project, @time_entry.hours.to_f)}#{" (#{@time_entry.comments})" unless @time_entry.comments.blank?}.</div>"
           end
         end
       end
