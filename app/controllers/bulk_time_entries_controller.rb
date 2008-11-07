@@ -5,7 +5,7 @@ class BulkTimeEntriesController < ApplicationController
   before_filter :load_allowed_projects
   
   def index
-    @time_entries = [TimeEntry.new(:spent_on => Date.today.to_s)]
+    @time_entries = [TimeEntry.new(:spent_on => Date.today.to_s, :hours=>nil)]
 
     if @projects.empty?
       render :action => 'no_projects'
@@ -20,6 +20,7 @@ class BulkTimeEntriesController < ApplicationController
         @time_entries.each_pair do |html_id, entry|
           next unless BulkTimeEntriesController.allowed_project?(entry[:project_id])
           @time_entry = TimeEntry.new(entry)
+          @time_entry.hours = nil if @time_entry.hours <= 0
           @time_entry.project_id = entry[:project_id] # project_id is protected from mass assignment
           @time_entry.user = User.current
           unless @time_entry.save
@@ -33,7 +34,7 @@ class BulkTimeEntriesController < ApplicationController
   end
     
   def add_entry
-    @time_entry = TimeEntry.new(:spent_on => Date.today.to_s)
+    @time_entry = TimeEntry.new(:spent_on => Date.today.to_s, :hours=>nil)
     respond_to do |format|
       format.js do
         render :update do |page| 
