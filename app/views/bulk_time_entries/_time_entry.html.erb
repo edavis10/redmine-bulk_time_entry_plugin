@@ -1,34 +1,34 @@
 <% fields_for('time_entries[]', time_entry) do |f| %>
   <%# trick to have automatically populated html id/names of fields %>
-  <% time_entry.id = rnd = rand(9999) %>
+  <% time_entry.id = rnd = rand(9999)
+  @object = time_entry 
+  @object_name = 'time_entry' -%>
   <div class="box" id="entry_<%= rnd %>">
-    <%# TODO: JS suggest for issue_id %>
     <%# TODO: preselect project if in project page %>
     <%= error_messages_for 'time_entry' %>
     <p>
-      <%= label_for_field :project_id, :required => true %>
+      <%= label_for_field :project_id, rnd, :required => true %>
       <%= f.select :project_id, group_by_root_for_select(@projects), {}, 
-        { :onchange => "new Ajax.Request('/bulk_time_entries/load_assigned_issues', { parameters: { project_id: $F(this), entry_id: $(this).up(1).id } } )" } 
-    %>&nbsp;
+        { :onchange => "new Ajax.Request('#{url_for :action => 'load_assigned_issues'}', { parameters: { project_id: $F(this), entry_id: $(this).up(1).id } } )" } %>&nbsp;
       <%= link_to(l(:label_project_new), {:controller => 'projects', :action => 'add'}, :class => 'icon icon-add') if User.current.admin? %>  
     </p>
     <p id="entry_<%= rnd %>_issues">
       <%= render :partial => 'issues_selector', :locals => { :issues => @issues, :f => f, :rnd => rnd } %>
     </p>
     <p>
-      <%= label_for_field :spent_on, :required => true %>
+      <%= label_for_field :spent_on, rnd, :required => true %>
       <%= f.text_field :spent_on, :size => 10, :name => "time_entries[#{rnd}][spent_on]", :id => "time_entries_#{rnd}_spent_on" %><%= calendar_for("time_entries_#{rnd}_spent_on") %>
     </p>
     <p>
-      <%= label_for_field :hours, :required => true %>
+      <%= label_for_field :hours, rnd, :required => true %>
       <%= f.text_field :hours, :size => 6, :maxlength => 6 %>
     </p>
     <p>
-      <%= label_for_field :comments %>
+      <%= label_for_field :comments, rnd %>
       <%= f.text_field :comments, :size => 100, :maxlength => 255 %>
     </p>
     <p>
-      <%= label_for_field :activity_id, :required => true %>
+      <%= label_for_field :activity_id, rnd, :required => true %>
       <%= f.select :activity_id, (@activities.collect {|p| [p.name, p.id]}) %>
     </p>
     <% time_entry.custom_field_values.each do |value| %>
