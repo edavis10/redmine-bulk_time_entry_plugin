@@ -7,5 +7,5 @@ Michele Franzin
 - added Italian translation
 - view localization
 
-Antono
-- ajax issue selector
+Antono Vasiljev <antono.vasiljev[AT]gmail[DOT]com>
+- ajax issues selector
