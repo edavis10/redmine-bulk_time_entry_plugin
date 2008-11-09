@@ -7,11 +7,12 @@
     <%= error_messages_for 'time_entry' %>
     <p>
       <%= label_for_field :project_id, :required => true %>
-      <%= f.select :project_id, group_by_root_for_select(@projects) %>&nbsp;
+      <%= f.select :project_id, group_by_root_for_select(@projects), {}, 
+      { :onchange => "new Ajax.Request('/bulk_time_entries/load_assigned_issues', { parameters: { project_id: $F(this), entry_id: $(this).up(1).id } } )" } 
+      %>&nbsp;
     </p>
-    <p>
-      <%= label_for_field :issue_id %>
-      <%= f.text_field :issue_id, :size => 6 %>
+    <p id="entry_<%= rnd %>_issues">
+    <%= render :partial => 'issues_selector', :locals => { :issues => @issues, :f => f } %>
     </p>
     <p>
       <%= label_for_field :spent_on, :required => true %>
