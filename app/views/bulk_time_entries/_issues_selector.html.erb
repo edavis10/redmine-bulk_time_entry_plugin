@@ -1,0 +1,2 @@
+<%= label_for_field :issue_id %>
+<%= select "time_entries[#{rnd}]", 'issue_id', @issues.collect { |i| [['(',i.id.to_s,') ',i.subject].join,  i.id] } %>&nbsp;

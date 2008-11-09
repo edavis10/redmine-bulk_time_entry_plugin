@@ -10,6 +10,14 @@ class BulkTimeEntriesController < ApplicationController
     if @projects.empty?
       render :action => 'no_projects'
     end
+    @issues = Issue.find(:all, :conditions => { :assigned_to_id => User.current.id, :project_id => @projects.first.id })
+  end
+  
+  def load_assigned_issues
+    @issues = Issue.find(:all, :conditions => { :assigned_to_id => User.current.id, :project_id => params[:project_id] })
+    render(:update) do |page|
+      page.replace_html params[:entry_id]+'_issues', :partial => 'issues_selector', :locals => { :issues => @issues, :rnd => params[:entry_id].split('_')[1]  }
+    end
   end
   
   def save
@@ -35,6 +43,7 @@ class BulkTimeEntriesController < ApplicationController
     
   def add_entry
     @time_entry = TimeEntry.new(:spent_on => Date.today, :hours=>nil)
+    @issues = Issue.find(:all, :conditions => { :assigned_to_id => User.current.id, :project_id => @projects.first.id })
     respond_to do |format|
       format.js do
         render :update do |page| 
@@ -54,7 +63,7 @@ class BulkTimeEntriesController < ApplicationController
     @projects = User.current.projects.find(:all,
       Project.allowed_to_condition(User.current, :log_time), :include => :parent)
   end
-  
+
   def self.allowed_project?(project_id)
     return User.current.projects.find_by_id(project_id, Project.allowed_to_condition(User.current, :log_time))
   end

@@ -6,3 +6,6 @@ Eric Davis <edavis[AT]littlestreamsoftware[DOT]com>
 Michele Franzin
 - added Italian translation
 - view localization
+
+Antono
+- ajax issue selector
