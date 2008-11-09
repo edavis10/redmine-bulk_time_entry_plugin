@@ -4,7 +4,6 @@
   @object = time_entry 
   @object_name = 'time_entry' -%>
   <div class="box" id="entry_<%= rnd %>">
-    <%# TODO: preselect project if in project page %>
     <%= error_messages_for 'time_entry' %>
     <p>
       <%= label_for_field :project_id, rnd, :required => true %>
@@ -13,7 +12,7 @@
       <%= link_to(l(:label_project_new), {:controller => 'projects', :action => 'add'}, :class => 'icon icon-add') if User.current.admin? %>  
     </p>
     <p id="entry_<%= rnd %>_issues">
-      <%= render :partial => 'issues_selector', :locals => { :issues => @issues, :f => f, :rnd => rnd } %>
+      <%= render :partial => 'issues_selector', :locals => { :issues => @issues, :rnd => rnd, :time_entry => time_entry } %>
     </p>
     <p>
       <%= label_for_field :spent_on, rnd, :required => true %>

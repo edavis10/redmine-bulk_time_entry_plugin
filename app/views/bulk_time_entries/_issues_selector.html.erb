@@ -1,2 +1,2 @@
 <%= label_for_field :issue_id, rnd %>
-<%= select "time_entries[#{rnd}]", 'issue_id', @issues.collect { |i| [['(',i.id.to_s,') ',i.subject].join,  i.id] }, :include_blank => true %>&nbsp;
+<%= collection_select "time_entries[#{rnd}]", :issue_id, @issues, :id, :to_s, {:include_blank => true, :object => time_entry}, {} %>&nbsp;
