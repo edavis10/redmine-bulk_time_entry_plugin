@@ -12,7 +12,7 @@
       %>&nbsp;
     </p>
     <p id="entry_<%= rnd %>_issues">
-    <%= render :partial => 'issues_selector', :locals => { :issues => @issues, :f => f } %>
+    <%= render :partial => 'issues_selector', :locals => { :issues => @issues, :f => f, :rnd => rnd } %>
     </p>
     <p>
       <%= label_for_field :spent_on, :required => true %>
