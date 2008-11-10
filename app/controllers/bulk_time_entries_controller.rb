@@ -10,7 +10,6 @@ class BulkTimeEntriesController < ApplicationController
     if @projects.empty?
       render :action => 'no_projects'
     end
-    @issues = []
   end
   
   def load_assigned_issues
@@ -43,7 +42,6 @@ class BulkTimeEntriesController < ApplicationController
     
   def add_entry
     @time_entry = TimeEntry.new(:spent_on => Date.today.to_s)
-    @issues = Issue.find(:all, :conditions => { :assigned_to_id => User.current.id, :project_id => @projects.first.id })
     respond_to do |format|
       format.js do
         render :update do |page| 
