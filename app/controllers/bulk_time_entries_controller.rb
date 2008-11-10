@@ -10,7 +10,7 @@ class BulkTimeEntriesController < ApplicationController
     if @projects.empty?
       render :action => 'no_projects'
     end
-    @issues = Issue.find(:all, :conditions => { :project_id => @projects.first.id })
+    @issues = []
   end
   
   def load_assigned_issues
