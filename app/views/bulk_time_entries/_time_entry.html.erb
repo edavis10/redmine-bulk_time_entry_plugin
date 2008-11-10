@@ -8,7 +8,7 @@
     <p>
       <%= label_for_field :project_id, :required => true %>
       <%= f.select :project_id, group_by_root_for_select(@projects), {:prompt => l(:field_project)}, 
-      { :onchange => "new Ajax.Request('/bulk_time_entries/load_assigned_issues', { parameters: { project_id: $F(this), entry_id: $(this).up(1).id } } )" } 
+      { :onchange => "new Ajax.Request('#{url_for :action => 'load_assigned_issues'}', { parameters: { project_id: $F(this), entry_id: $(this).up(1).id } } )" } 
       %>&nbsp;
     </p>
     <p id="entry_<%= rnd %>_issues">
