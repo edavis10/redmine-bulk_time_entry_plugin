@@ -1,6 +1,6 @@
 # Bulk Time Entry Plugin
 
-This is a plugin to enter multiple tiem entries at one time.
+This is a plugin to enter multiple time entries at one time.
 
 ## Features
 
