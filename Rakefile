@@ -1,3 +1,5 @@
+PLUGIN_NAME = 'bulk_time_entry_plugin'
+  
 Dir[File.expand_path(File.dirname(__FILE__)) + "/lib/tasks/**/*.rake"].sort.each { |ext| load ext }
 
 # Modifided from the RSpec on Rails plugins
@@ -10,6 +12,7 @@ rspec_base = File.expand_path(File.dirname(__FILE__) + '/../rspec/lib')
 $LOAD_PATH.unshift(rspec_base) if File.exist?(rspec_base)
 
 require 'rake'
+require 'rake/clean'
 require 'rake/rdoctask'
 begin
   require 'spec/rake/spectask'
@@ -21,6 +24,8 @@ rescue LoadError
   puts ("*" * 20) + " ERROR " + ('*' *20)
   exit -1
 end
+
+CLEAN.include("**/#{PLUGIN_NAME}.zip", "**/#{PLUGIN_NAME}.tar.gz")
 
 # No Database needed
 spec_prereq = :noop
@@ -68,12 +73,29 @@ namespace :spec do
   end
 end
 
-desc 'Generate documentation for the Budget plugin.'
+desc 'Generate documentation for the Bulk Time Entry plugin.'
 Rake::RDocTask.new(:rdoc) do |rdoc|
   rdoc.rdoc_dir = 'doc'
-  rdoc.title    = 'Budget'
+  rdoc.title    = 'Bulk Time Entry'
   rdoc.options << '--line-numbers' << '--inline-source'
-  rdoc.rdoc_files.include('README.txt')
+  rdoc.rdoc_files.include('README.markdown')
   rdoc.rdoc_files.include('lib/**/*.rb')
   rdoc.rdoc_files.include('app/**/*.rb')
 end
+
+desc "Create release archives"
+task :release => [:clean, :rdoc, 'release:zip', 'release:tarball']
+
+namespace :release do
+  desc "Create a zip archive"
+  task :zip => [:clean] do
+    sh "git archive --format=zip --prefix=#{PLUGIN_NAME}/ HEAD > #{PLUGIN_NAME}.zip"
+  end
+
+  desc "Create a tarball archive"
+  task :tarball => [:clean] do
+    sh "git archive --format=tar --prefix=#{PLUGIN_NAME}/ HEAD | gzip > #{PLUGIN_NAME}.tar.gz"
+  end  
+end
+
+
