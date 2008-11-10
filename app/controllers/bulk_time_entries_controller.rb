@@ -10,11 +10,11 @@ class BulkTimeEntriesController < ApplicationController
     if @projects.empty?
       render :action => 'no_projects'
     end
-    @issues = Issue.find(:all, :conditions => { :assigned_to_id => User.current.id, :project_id => @projects.first.id })
+    @issues = Issue.find(:all, :conditions => { :project_id => @projects.first.id })
   end
   
   def load_assigned_issues
-    @issues = Issue.find(:all, :conditions => { :assigned_to_id => User.current.id, :project_id => params[:project_id] })
+    @issues = Issue.find(:all, :conditions => { :project_id => params[:project_id] })
     render(:update) do |page|
       page.replace_html params[:entry_id]+'_issues', :partial => 'issues_selector', :locals => { :issues => @issues, :rnd => params[:entry_id].split('_')[1]  }
     end
