@@ -1,4 +1,5 @@
-Redmine Timesheets is a Redmine plugin to create timesheets from all projects.
+Redmine Bulk Time Entry is a Redmine plugin to enter multiple time 
+entries in bulk.
 Copyright (C) 2007  Eric Davis, Little Stream Software
 
 This program is free software; you can redistribute it and/or
