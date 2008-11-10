@@ -1,7 +1,7 @@
-<%= label_for_field :issue_id %>
+<%= label_for_field :issue_id, rnd %>
 <% if @issues.nil? || @issues.empty? %>
 <em><%= l(:label_no_data) %></em>
 <% else %>
-<%= select "time_entries[#{rnd}]", 'issue_id', @issues.collect { |i| [['#',i.id.to_s,' - ',i.subject].join,  i.id] }, { :include_blank => true } %>&nbsp;
+<%= select "time_entries[#{rnd}]", 'issue_id', @issues.collect { |i| [i.to_s,  i.id] }, { :include_blank => true } %>&nbsp;
 <% end %>
 <%# f.text_field :issue_id, :size => 6 %>
