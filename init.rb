@@ -7,5 +7,5 @@ Redmine::Plugin.register :bulk_time_entry_plugin do
   version '0.1.0'
   
   menu :top_menu, :bulk_time_entry, {:controller => "bulk_time_entries", :action => 'index'}, 
-    :caption => :bulk_time_entry_title, :if => Proc.new{User.current.logged?} 
+    :caption => :bulk_time_entry_title, :if => Proc.new{User.current.allowed_to?(:log_time, nil, :global => true)} 
 end
