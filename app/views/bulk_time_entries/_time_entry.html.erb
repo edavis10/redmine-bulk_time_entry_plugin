@@ -34,7 +34,7 @@
     </p>
     <% time_entry.custom_field_values.each do |value| %>
       <p><%= custom_field_tag_with_label "time_entries[#{rnd}]", value %></p>
-    <% end %>
+    <% end if time_entry.respond_to?(:custom_field_values) %>
   </div>
 <% end %>
 
