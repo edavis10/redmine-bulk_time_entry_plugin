@@ -2,6 +2,6 @@
 <% if @issues.nil? || @issues.empty? %>
 <em><%= l(:label_no_data) %></em>
 <% else %>
-<%= select "time_entries[#{rnd}]", 'issue_id', @issues.collect { |i| [i.to_s,  i.id] }, { :include_blank => true } %>&nbsp;
+<%= select_tag "time_entries[#{rnd}]", grouped_options_for_issues(@issues) %>&nbsp;
 <% end %>
 <%# f.text_field :issue_id, :size => 6 %>

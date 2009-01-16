@@ -23,4 +23,30 @@ module BulkTimeEntriesHelper
     end
     return result
   end
+  
+  def grouped_options_for_issues(issues)
+    open_issues = []
+    closed_issues = []
+    issues.each do |issue|
+      if issue.closed?
+        closed_issues << issue
+      else
+        open_issues << issue
+      end
+    end
+
+    html = '<option></option>'
+    unless open_issues.empty?
+      html << "<optgroup label='#{l(:label_open_issues)}'>"
+      html << options_from_collection_for_select(open_issues, :id, :to_s)
+      html << "</optgroup>"
+    end
+
+    unless closed_issues.empty?
+      html << "<optgroup label='#{l(:label_closed_issues)}'>"
+      html << options_from_collection_for_select(closed_issues, :id, :to_s)
+      html << "</optgroup>"
+    end
+    html
+  end
 end
