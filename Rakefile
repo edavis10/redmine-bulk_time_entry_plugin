@@ -1,29 +1,21 @@
 PLUGIN_NAME = 'bulk_time_entry_plugin'
-  
+ 
+require 'rubygems'
+gem 'rspec'
+gem 'rspec-rails'
+
 Dir[File.expand_path(File.dirname(__FILE__)) + "/lib/tasks/**/*.rake"].sort.each { |ext| load ext }
 
 # Modifided from the RSpec on Rails plugins
 PLUGIN_ROOT = File.expand_path(File.dirname(__FILE__))
-
-# In rails 1.2, plugins aren't available in the path until they're loaded.
-# Check to see if the rspec plugin is installed first and require
-# it if it is.  If not, use the gem version.
-rspec_base = File.expand_path(File.dirname(__FILE__) + '/../rspec/lib')
-$LOAD_PATH.unshift(rspec_base) if File.exist?(rspec_base)
+REDMINE_ROOT = File.expand_path(File.dirname(__FILE__) + '/../../../')
+REDMINE_APP = File.expand_path(File.dirname(__FILE__) + '/../../../app')
+REDMINE_LIB = File.expand_path(File.dirname(__FILE__) + '/../../../lib')
 
 require 'rake'
 require 'rake/clean'
 require 'rake/rdoctask'
-begin
-  require 'spec/rake/spectask'
-  require 'spec/translator'
-rescue LoadError
-  puts ("*" * 20) + " ERROR " + ('*' *20)
-  puts "RSpec or RSpec on Rails is not installed.  Please install them and retry. (http://rspec.info)"
-  puts
-  puts ("*" * 20) + " ERROR " + ('*' *20)
-  exit -1
-end
+require 'spec/rake/spectask'
 
 CLEAN.include("**/#{PLUGIN_NAME}.zip", "**/#{PLUGIN_NAME}.tar.gz")
 
@@ -76,7 +68,7 @@ end
 desc 'Generate documentation for the Bulk Time Entry plugin.'
 Rake::RDocTask.new(:rdoc) do |rdoc|
   rdoc.rdoc_dir = 'doc'
-  rdoc.title    = 'Bulk Time Entry'
+  rdoc.title    = PLUGIN_NAME
   rdoc.options << '--line-numbers' << '--inline-source'
   rdoc.rdoc_files.include('README.markdown')
   rdoc.rdoc_files.include('lib/**/*.rb')
