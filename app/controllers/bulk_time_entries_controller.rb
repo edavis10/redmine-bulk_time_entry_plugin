@@ -46,7 +46,14 @@ class BulkTimeEntriesController < ApplicationController
   end
     
   def add_entry
-    @time_entry = TimeEntry.new(:spent_on => Date.today.to_s)
+    begin
+      spent_on = Date.parse(params[:date])
+    rescue ArgumentError
+      # Fall through
+    end
+    spent_on ||= Date.today
+    
+    @time_entry = TimeEntry.new(:spent_on => spent_on.to_s)
     respond_to do |format|
       format.js do
         render :update do |page| 
