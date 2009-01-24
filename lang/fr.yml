@@ -1,0 +1,5 @@
+bulk_time_entry_title: Saisie de temps
+label_bulk_time_entries: Saisie de temps
+label_bulk_time_add_another: Saisir un nouveau temps
+text_bulk_time_entry_permission: Aucun projet ne vous permet de saisir des temps
+text_time_added_to_project: %s heures ajoutees au projet
