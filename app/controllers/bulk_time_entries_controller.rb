@@ -66,7 +66,7 @@ class BulkTimeEntriesController < ApplicationController
   private
 
   def load_activities
-    @activities = Enumeration::get_values('ACTI')  
+    @activities = RedmineCompatibility::Enumeration::activities
   end
   
   def load_allowed_projects
