@@ -4,7 +4,6 @@
   @object = time_entry 
   @object_name = 'time_entry' -%>
   <div class="box" id="entry_<%= rnd %>">
-    <%# TODO: preselect project if in project page %>
     <%= error_messages_for 'time_entry' %>
     <p>
       <%= label_for_field :project_id, rnd, :required => true %>
