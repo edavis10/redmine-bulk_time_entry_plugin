@@ -3,6 +3,9 @@ class BulkTimeEntriesController < ApplicationController
   layout 'base'
   before_filter :load_activities
   before_filter :load_allowed_projects
+
+  helper :custom_fields
+
   
   def index
     @time_entries = [TimeEntry.new(:spent_on => Date.today.to_s)]
