@@ -5,10 +5,20 @@
     <%= render :partial => 'time_entry', :collection => @time_entries %>
   </div>
   <div id="add-entry">
-    <%= link_to_remote l(:label_bulk_time_add_another), :url => {:action => 'add_entry'}, :html => {:accesskey => 'a'}, :with => "'date=' + $$('.spent_on').last().value" %>
+    <%= link_to_remote l(:label_bulk_time_add_another), :url => {:action => 'add_entry'}, :html => {:accesskey => 'a'}, :with => "'date='+ getLastTimeEntryDate()" %>
   </div>
   <br/>
   <%= submit_tag l(:button_save) %>
 <% end %>
 
 <% html_title l(:label_bulk_time_entries) %>
+
+<script type="text/javascript">
+function getLastTimeEntryDate() {
+  if ($$('.spent_on').size() > 0) {
+    return $$('.spent_on').last().value;
+  } else {
+    return null;
+  } 
+}
+</script>
