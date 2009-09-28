@@ -1,5 +1,7 @@
 require 'redmine'
 
+config.gem 'fastercsv'
+
 if Rails.env == "test"
   
   # Bootstrap ObjectDaddy since it's needs to load before the Models
