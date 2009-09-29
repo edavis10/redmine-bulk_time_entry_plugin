@@ -5,7 +5,7 @@ namespace :bulk_time_entry do
     task :csv => [:environment] do
       csv_file = ENV['CSV_FILE'] || File.join(RAILS_ROOT, 'time_entries.csv')
 
-      BulkTimeEntry.import_from_csv(csv_file)
+      puts BulkTimeEntry.import_from_csv(csv_file)
     end
     
   end
