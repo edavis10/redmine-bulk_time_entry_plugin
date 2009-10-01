@@ -22,6 +22,22 @@ A copy of the plugin can be found in the {downloads}[https://projects.littlestre
 2. Click "Add Another" or use the accesskey of Alt + A to add another time entry form
 3. Click "Save" to save all the time entries
 
+=== CSV Import
+
+A Rake task is included to allow importing Time Entries in bulk.  The CSV file should be in the following format:
+
+* No header
+* Column 1 - Issue id
+* Column 2 - Time Entry comment (optional)
+* Column 3 - Date spent on. e.g. YYYY-MM-DD
+* Column 4 - Activity id. e.g. 6
+* Column 5 - Number of hours
+* Column 6 - User login. e.g. edavis
+
+The rake task can be run like the following:
+
+    rake bulk_time_entry:import:csv RAILS_ENV=production CSV_FILE=/path/to/time_entries.csv
+
 == License
 
 This plugin is licensed under the GNU GPL v2.  See COPYRIGHT.txt and GPL.txt for details.
