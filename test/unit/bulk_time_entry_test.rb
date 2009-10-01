@@ -66,8 +66,6 @@ class BulkTimeEntryTest < Test::Unit::TestCase
         
       end
 
-      should "skip header lines"
-      
       context "with valid imports" do
         setup do
           @csv_data = generate_csv_data
