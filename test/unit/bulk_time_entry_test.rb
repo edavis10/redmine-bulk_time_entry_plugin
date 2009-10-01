@@ -40,7 +40,31 @@ class BulkTimeEntryTest < Test::Unit::TestCase
 
     context "valid file" do
 
-      should "skip empty lines"
+      should "skip empty lines" do
+        @csv_data = generate_csv_data
+        @csv_data << ['','','','','','']
+        @file = mock_csv_file('/csv/valid.csv',
+                              @csv_data.collect {|row| row.join(', ')}.join("\n"))
+
+        assert_difference 'TimeEntry.count', 5 do
+          BulkTimeEntry.import_from_csv(@file.name)
+        end
+        
+      end
+
+      should "skip invalid lines" do
+        @csv_data = generate_csv_data
+        @csv_data << ['','']
+        @file = mock_csv_file('/csv/valid.csv',
+                              @csv_data.collect {|row| row.join(', ')}.join("\n"))
+
+        @response = ''
+        assert_difference 'TimeEntry.count', 5 do
+          @response = BulkTimeEntry.import_from_csv(@file.name)
+        end
+        assert_match /1 records failed to import/, @response
+        
+      end
 
       should "skip header lines"
       

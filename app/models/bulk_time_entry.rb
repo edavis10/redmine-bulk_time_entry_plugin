@@ -4,10 +4,21 @@ class BulkTimeEntry
   def self.import_from_csv(file)
     csv_file = File.read(file)
     row_counter = 0
+    failed_counter = 0
 
     begin
       ActiveRecord::Base.transaction do
         FasterCSV.parse(csv_file) do |row|
+          if row[0].blank? ||
+              row[2].blank? ||
+              row[3].blank? ||
+              row[4].blank? ||
+              row[5].blank?
+            
+            failed_counter += 1
+            next
+
+          end
           time = TimeEntry.new(:issue_id => row[0],
                                :comments => row[1].strip, # TODO: truncate
                                :spent_on => row[2],
@@ -22,8 +33,8 @@ class BulkTimeEntry
     rescue ActiveRecord::StatementInvalid, ActiveRecord::RecordNotSaved, ActiveRecord::RecordInvalid => ex
       return "ERROR: #{ex.message}"
     end
-
-    return "Imported #{row_counter} records"
+    failed_message = failed_counter == 0 ? '' : "#{failed_counter} records failed to import."
+    return "Imported #{row_counter} records. #{failed_message}"
   end
   
 end
