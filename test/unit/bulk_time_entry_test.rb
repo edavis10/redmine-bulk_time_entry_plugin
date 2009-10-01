@@ -93,6 +93,25 @@ class BulkTimeEntryTest < Test::Unit::TestCase
           assert_equal last_csv_entry[5], time_entry.user.login
         end
 
+        should 'truncate comments over 255 characters' do
+          @csv_data << [
+                       Issue.last.id.to_s,
+                       'A' * 300,
+                       Date.today.to_s,
+                       @activity.name,
+                       5,
+                       @user.login
+                      ]
+          @file = mock_csv_file('/csv/valid.csv',
+                                @csv_data.collect {|row| row.join(', ')}.join("\n"))
+
+          BulkTimeEntry.import_from_csv(@file.name)
+          time_entry = TimeEntry.last
+
+          assert_match /AAA/, time_entry.comments
+          assert_equal 255, time_entry.comments.length
+
+        end
       end
     end
   end

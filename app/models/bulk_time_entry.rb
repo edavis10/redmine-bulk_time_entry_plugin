@@ -20,10 +20,11 @@ class BulkTimeEntry
 
           end
           time = TimeEntry.new(:issue_id => row[0],
-                               :comments => row[1].strip, # TODO: truncate
                                :spent_on => row[2],
                                :activity => TimeEntryActivity.find_by_name(row[3].strip),
                                :hours => row[4])
+          # Truncate comments to 255 chars
+          time.comments = row[1].mb_chars[0..255].strip.to_s if row[1].present?
           time.user = User.find_by_login(row[5].strip)
 
           time.save!
