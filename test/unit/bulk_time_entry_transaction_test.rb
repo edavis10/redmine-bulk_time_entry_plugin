@@ -26,7 +26,7 @@ class BulkTimeEntryTransactionTest < Test::Unit::TestCase
     context "with a failing record" do
       setup do
         @csv_data = generate_csv_data
-        @csv_data << ['','No issue',Date.today.to_s, @activity.name, 4.5, @user.login]
+        @csv_data << ['1500','No issue',Date.today.to_s, @activity.name, 4.5, @user.login]
 
         @file = mock_csv_file('/csv/missing_issue_id.csv',
                               @csv_data.collect {|row| row.join(', ')}.join("\n"))
