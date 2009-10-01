@@ -34,7 +34,7 @@ A Rake task is included to allow importing Time Entries in bulk.  The CSV file s
 * Column 5 - Number of hours
 * Column 6 - User login. e.g. edavis
 
-The rake task can be run like the following:
+The rake task should be run in your Redmine root like:
 
     rake bulk_time_entry:import:csv RAILS_ENV=production CSV_FILE=/path/to/time_entries.csv
 
