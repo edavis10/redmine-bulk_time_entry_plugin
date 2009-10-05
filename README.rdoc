@@ -30,7 +30,7 @@ A Rake task is included to allow importing Time Entries in bulk.  The CSV file s
 * Column 1 - Issue id
 * Column 2 - Time Entry comment (optional)
 * Column 3 - Date spent on. e.g. YYYY-MM-DD
-* Column 4 - Activity id. e.g. 6
+* Column 4 - Activity name. e.g. Development
 * Column 5 - Number of hours
 * Column 6 - User login. e.g. edavis
 
