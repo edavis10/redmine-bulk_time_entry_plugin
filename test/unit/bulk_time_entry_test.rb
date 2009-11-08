@@ -4,7 +4,7 @@ require 'fastercsv'
 
 # Failing records are tested in BulkTimeEntryTransaction since Rails
 # can't turn fixture transactions off for a single test case.
-class BulkTimeEntryTest < Test::Unit::TestCase
+class BulkTimeEntryTest < ActiveSupport::TestCase
   include BulkTimeEntryTestHelper  
 
   context "#import_from_csv" do

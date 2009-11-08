@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 require 'fastercsv'
 
-class BulkTimeEntryTransactionTest < Test::Unit::TestCase
+class BulkTimeEntryTransactionTest < ActiveSupport::TestCase
   include BulkTimeEntryTestHelper
   self.use_transactional_fixtures = false # using transactions in code
 

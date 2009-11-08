@@ -22,7 +22,7 @@ def User.generate_with_protected!(attributes={})
 end
 
 # Helpers
-class Test::Unit::TestCase
+class ActiveSupport::TestCase
 end
 
 module BulkTimeEntryTestHelper
@@ -51,5 +51,5 @@ module BulkTimeEntryTestHelper
 end
 
 # Shoulda
-class Test::Unit::TestCase
+class ActiveSupport::TestCase
 end
