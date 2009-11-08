@@ -10,20 +10,6 @@ module BulkTimeEntriesHelper
     label
   end
   
-  def group_by_root_for_select(projects)
-    result = []
-    user_projects_by_root = projects.group_by(&:root) 
-    user_projects_by_root.keys.sort.each do |root| 
-      result  << [h(root.name), root.id] 
-      user_projects_by_root[root].sort.each do |project| 
-        next if project == root 
-        # result << ["&#187; #{h(project.name)}", project.id] 
-        result << ["» #{h(project.name)}", project.id] 
-      end 
-    end
-    return result
-  end
-  
   def grouped_options_for_issues(issues)
     open_issues = []
     closed_issues = []

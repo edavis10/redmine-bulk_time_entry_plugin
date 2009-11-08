@@ -7,8 +7,7 @@
     <%= error_messages_for 'time_entry' %>
     <p>
       <%= label_for_field :project_id, rnd, :required => true %>
-      <%  ordered_projects = group_by_root_for_select(@projects) %>
-      <%= f.select :project_id, ordered_projects, {}, 
+      <%= f.select :project_id, project_tree_options_for_select(Project.has_module(:time_tracking)), {}, 
         { :onchange => "new Ajax.Request('#{url_for :action => 'load_assigned_issues'}', { parameters: { project_id: $F(this), entry_id: $(this).up(1).id } } )" } %>&nbsp;
     </p>
     <p id="entry_<%= rnd %>_issues">
