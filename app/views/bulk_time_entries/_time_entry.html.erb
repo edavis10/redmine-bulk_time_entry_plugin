@@ -7,11 +7,12 @@
     <%= error_messages_for 'time_entry' %>
     <p>
       <%= label_for_field :project_id, rnd, :required => true %>
-      <%= f.select :project_id, project_tree_options_for_select(Project.has_module(:time_tracking)), {}, 
+      <% projects = project_tree_options_for_select(Project.has_module(:time_tracking)) %>
+      <%= f.select :project_id, projects, {}, 
         { :onchange => "new Ajax.Request('#{url_for :action => 'load_assigned_issues'}', { parameters: { project_id: $F(this), entry_id: $(this).up(1).id } } )" } %>&nbsp;
     </p>
     <p id="entry_<%= rnd %>_issues">
-    <% @issues = controller.get_issues ordered_projects.first %>
+    <% @issues = controller.get_issues projects.first %>
     <%= render :partial => 'issues_selector', :locals => { :issues => @issues, :f => f, :rnd => rnd } %>
     </p>
     <p>
