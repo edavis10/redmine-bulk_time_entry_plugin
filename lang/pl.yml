@@ -1,0 +1,5 @@
+﻿bulk_time_entry_title: Grupowe wpisanie godzin pracy
+label_bulk_time_entries: Grupowe Uzupełnianie Godzin Pracy
+label_bulk_time_add_another: Dodaj Kolejny
+text_bulk_time_entry_permission: Nie masz uprawnień do wpisywania godzin w żadnym projekcie
+text_time_added_to_project: "{{count}} godzin dodano do projektu"
