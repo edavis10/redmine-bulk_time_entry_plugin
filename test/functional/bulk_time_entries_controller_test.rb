@@ -8,4 +8,37 @@ class BulkTimeEntriesControllerTest < ActionController::TestCase
     should_route :post, "/bulk_time_entries/add_entry", { :action => :add_entry }
   end
 
+  should_have_before_filter :load_activities
+  should_have_before_filter :load_allowed_projects
+
+  context "GET to :index" do
+    context "as a user without any projects" do
+      setup do
+        @user = User.generate_with_protected!
+        @request.session[:user_id] = @user.id
+
+        get :index
+      end
+      
+      should_respond_with :success
+      should_assign_to :time_entries
+      should_assign_to :projects
+      should_render_template :no_projects
+
+    end
+
+    context "as a user with projects" do
+      setup do
+        @project = Project.generate!
+        generate_user_and_login_for_project(@project)
+
+        get :index
+      end
+      
+      should_respond_with :success
+      should_assign_to :time_entries
+      should_assign_to :projects
+      should_render_template :index
+    end
+  end
 end

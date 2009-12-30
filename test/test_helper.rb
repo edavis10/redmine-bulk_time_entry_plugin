@@ -41,4 +41,10 @@ end
 
 # Shoulda
 class ActiveSupport::TestCase
+  def generate_user_and_login_for_project(project, user_attributes={})
+    @user = User.generate_with_protected!(user_attributes)
+    @role = Role.generate!(:permissions => Redmine::AccessControl.permissions.collect(&:name))
+    @member = Member.create(:project => @project, :user => @user, :roles => [@role])
+    @request.session[:user_id] = @user.id
+  end
 end
