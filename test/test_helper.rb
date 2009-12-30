@@ -6,6 +6,12 @@ Engines::Testing.set_fixture_path
 
 # Helpers
 class ActiveSupport::TestCase
+  def setup
+    User.anonymous
+    non_member = Role.generate!
+    non_member.builtin = Role::BUILTIN_NON_MEMBER
+    non_member.save!
+  end
 end
 
 module BulkTimeEntryTestHelper
