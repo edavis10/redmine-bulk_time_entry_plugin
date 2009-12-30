@@ -1,3 +1,9 @@
+begin
+  require 'time_entry_activity'
+rescue LoadError
+  # TimeEntryActivity is not available
+end
+
 # Wrappers around the Redmine core API changes between versions
 module BulkTimeEntryCompatibility
   class Enumeration
