@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class BulkTimeEntriesController < ApplicationController
   unloadable
   layout 'base'
@@ -85,4 +86,25 @@ class BulkTimeEntriesController < ApplicationController
   def self.allowed_project?(project_id)
     return User.current.projects.find_by_id(project_id, Project.allowed_to_condition(User.current, :log_time))
   end
+
+  # Redmine 0.8 compatibility fix
+  if Redmine::VERSION::MAJOR <= 0 && Redmine::VERSION::MINOR < 9
+    include ERB::Util
+    
+    def project_tree_options_for_select(projects)
+      result = []
+      user_projects_by_root = projects.group_by(&:root) 
+      user_projects_by_root.keys.sort.each do |root| 
+        result  << [h(root.name), root.id] 
+        user_projects_by_root[root].sort.each do |project| 
+          next if project == root 
+          result << ["» #{h(project.name)}", project.id] 
+        end 
+      end
+      return result
+    end
+    helper_method :project_tree_options_for_select
+    
+  end
+
 end
