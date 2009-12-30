@@ -7,6 +7,7 @@ class BulkTimeEntriesController < ApplicationController
 
   helper :custom_fields
 
+  protect_from_forgery :only => [:index, :save]
   
   def index
     @time_entries = [TimeEntry.new(:spent_on => Date.today.to_s)]
