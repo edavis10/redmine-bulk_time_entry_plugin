@@ -8,9 +8,13 @@ Engines::Testing.set_fixture_path
 class ActiveSupport::TestCase
   def setup
     User.anonymous
-    non_member = Role.generate!
-    non_member.builtin = Role::BUILTIN_NON_MEMBER
-    non_member.save!
+    begin
+      Role.non_member
+    rescue
+      non_member = Role.generate!
+      non_member.builtin = Role::BUILTIN_NON_MEMBER
+      non_member.save!
+    end
   end
 end
 
