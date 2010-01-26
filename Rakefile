@@ -6,7 +6,7 @@ Dir[File.expand_path(File.dirname(__FILE__)) + "/lib/tasks/**/*.rake"].sort.each
 RedminePluginSupport::Base.setup do |plugin|
   plugin.project_name = 'bulk_time_entry_plugin'
   plugin.default_task = [:test]
-  plugin.tasks = [:doc, :release, :clean, :test, :db]
+  plugin.tasks = [:doc, :release, :clean, :test, :db, :metrics]
   # TODO: gem not getting this automaticly
   plugin.redmine_root = File.expand_path(File.dirname(__FILE__) + '/../../../')
 end
@@ -35,3 +35,4 @@ begin
 rescue LoadError
   puts "Jeweler, or one of its dependencies, is not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
 end
+
