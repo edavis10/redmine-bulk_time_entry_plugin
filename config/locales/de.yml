@@ -1,0 +1,6 @@
+de:
+  bulk_time_entry_title: Zeiterfassung
+  label_bulk_time_entries: Zeiterfassung
+  label_bulk_time_add_another: Weiteren Eintrag hinzufügen
+  text_bulk_time_entry_permission: Sie haben keine Berechtigung um Zeiten für irgendein Projekt zu erfassen
+  text_time_added_to_project: "{{count}} Stunde/n im Projekt {{target}} erfasst"
