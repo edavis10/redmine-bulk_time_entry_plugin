@@ -35,11 +35,7 @@ class BulkTimeEntriesController < ApplicationController
 
       render :update do |page|
         @time_entries.each_pair do |html_id, entry|
-          next unless BulkTimeEntriesController.allowed_project?(entry[:project_id])
-          @time_entry = TimeEntry.new(entry)
-          @time_entry.hours = nil if @time_entry.hours.blank? or @time_entry.hours <= 0
-          @time_entry.project_id = entry[:project_id] # project_id is protected from mass assignment
-          @time_entry.user = User.current
+          @time_entry = save_time_entry_from_params(entry)
           unless @time_entry.save
             page.replace "entry_#{html_id}", :partial => 'time_entry', :object => @time_entry
           else
@@ -83,6 +79,16 @@ class BulkTimeEntriesController < ApplicationController
     @projects = User.current.projects.find(:all,
       Project.allowed_to_condition(User.current, :log_time))
   end
+
+  def save_time_entry_from_params(entry)
+    next unless BulkTimeEntriesController.allowed_project?(entry[:project_id])
+    time_entry = TimeEntry.new(entry)
+    time_entry.hours = nil if time_entry.hours.blank? or time_entry.hours <= 0
+    time_entry.project_id = entry[:project_id] # project_id is protected from mass assignment
+    time_entry.user = User.current
+    time_entry
+  end
+  helper_method :save_time_entry_from_params
 
   def self.allowed_project?(project_id)
     return User.current.projects.find_by_id(project_id, Project.allowed_to_condition(User.current, :log_time))
