@@ -14,3 +14,10 @@ Redmine::Plugin.register :bulk_time_entry_plugin do
     :caption => :bulk_time_entry_title, :if => Proc.new{User.current.allowed_to?(:log_time, nil, :global => true)} 
 end
 
+# Patches to the Redmine core.
+require 'dispatcher'
+
+Dispatcher.to_prepare :bulk_time_entry_plugin do
+  require_dependency 'time_entry'
+  TimeEntry.send(:include, BulkTimeEntryPlugin::Patches::TimeEntryPatch)
+end
