@@ -7,17 +7,26 @@ class BulkTimeEntryPlugin::Patches::TimeEntryPatchTest < ActiveSupport::TestCase
       @project = Project.generate!
       @role = Role.generate!(:permissions => Redmine::AccessControl.permissions.collect(&:name))
       Member.generate!(:project => @project, :roles => [@role], :user_id => @user.id)
-      @valid_params = {:project_id => @project.id, :hours => 5}
+      @valid_params = {:project_id => @project.id, :hours => 5, :activity_id => TimeEntryActivity.generate!.id, :spent_on => Date.today.to_s}
     end
 
-    should "return false if the current user is not allowed to log time to the project" do
+    should "return the unsaved TimeEntry if the current user is not allowed to log time to the project" do
       @role.update_attributes(:permissions => [])
 
-      assert_equal false, TimeEntry.create_bulk_time_entry(@valid_params)
+      assert_no_difference('TimeEntry.count') do
+        @entry = TimeEntry.create_bulk_time_entry(@valid_params)
+      end
+      assert_equal false, @entry.valid?
     end
     
     context "saving a valid record" do
-      should "save a new Time Entry record"
+      should "save a new Time Entry record" do
+        assert_difference('TimeEntry.count') do
+          @entry = TimeEntry.create_bulk_time_entry(@valid_params)
+        end
+
+        assert @entry.is_a? TimeEntry
+      end
 
       should "set the project of the new record" do
         @entry = TimeEntry.create_bulk_time_entry(@valid_params)

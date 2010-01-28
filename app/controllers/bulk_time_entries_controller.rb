@@ -36,7 +36,7 @@ class BulkTimeEntriesController < ApplicationController
       render :update do |page|
         @time_entries.each_pair do |html_id, entry|
           @time_entry = TimeEntry.create_bulk_time_entry(entry)
-          unless @time_entry && @time_entry.save
+          if @time_entry.new_record?
             page.replace "entry_#{html_id}", :partial => 'time_entry', :object => @time_entry
           else
             time_entry_target = if @time_entry.issue
