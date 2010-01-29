@@ -23,16 +23,19 @@ module BulkTimeEntriesHelper
 
     html = '<option></option>'
     unless open_issues.empty?
-      html << "<optgroup label='#{l(:label_open_issues)}'>"
-      html << options_from_collection_for_select(open_issues, :id, :to_s)
-      html << "</optgroup>"
+      html << labeled_option_group_from_collection_for_select(:label_open_issues, open_issues)
     end
 
     unless closed_issues.empty?
-      html << "<optgroup label='#{l(:label_closed_issues)}'>"
-      html << options_from_collection_for_select(closed_issues, :id, :to_s)
-      html << "</optgroup>"
+      html << labeled_option_group_from_collection_for_select(:label_closed_issues, closed_issues)
     end
+    html
+  end
+
+  def labeled_option_group_from_collection_for_select(label, collection)
+    html = "<optgroup label='#{l(label)}'>"
+    html << options_from_collection_for_select(collection, :id, :to_s)
+    html << "</optgroup>"
     html
   end
 end
