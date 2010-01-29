@@ -11,15 +11,7 @@ module BulkTimeEntriesHelper
   end
   
   def grouped_options_for_issues(issues)
-    open_issues = []
-    closed_issues = []
-    issues.each do |issue|
-      if issue.closed?
-        closed_issues << issue
-      else
-        open_issues << issue
-      end
-    end
+    closed_issues, open_issues = *issues.partition {|issue| issue.closed?}
 
     html = '<option></option>'
     unless open_issues.empty?
