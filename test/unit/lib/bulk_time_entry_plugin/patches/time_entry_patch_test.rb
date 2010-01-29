@@ -6,7 +6,7 @@ class BulkTimeEntryPlugin::Patches::TimeEntryPatchTest < ActiveSupport::TestCase
       User.current = @user = User.generate_with_protected!
       @project = Project.generate!
       @role = Role.generate!(:permissions => Redmine::AccessControl.permissions.collect(&:name))
-      Member.generate!(:project => @project, :roles => [@role], :user_id => @user.id)
+      Member.generate!(:project => @project, :roles => [@role], :principal => @user)
       @valid_params = {:project_id => @project.id, :hours => 5, :activity_id => TimeEntryActivity.generate!.id, :spent_on => Date.today.to_s}
     end
 
