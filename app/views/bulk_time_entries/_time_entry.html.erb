@@ -12,7 +12,7 @@
         { :onchange => "new Ajax.Request('#{url_for :action => 'load_assigned_issues'}', { parameters: { project_id: $F(this), entry_id: $(this).up(1).id } } )" } %>&nbsp;
     </p>
     <p id="entry_<%= rnd %>_issues">
-    <% @issues = get_issues projects.first.id %>
+    <% @issues = get_issues @projects.first.id %>
     <%= render :partial => 'issues_selector', :locals => { :issues => @issues, :f => f, :rnd => rnd } %>
     </p>
     <p>
