@@ -56,4 +56,33 @@ class BulkTimeEntriesHelperTest < HelperTestCase
       end
     end
   end
+
+  context "#get_issues" do
+    context "as a user without any projects" do
+      should "be empty" do
+        @user = User.generate_with_protected!
+        User.current = @user
+        @project = Project.generate!
+        Issue.generate_for_project!(@project)
+        Issue.generate_for_project!(@project)
+        
+        assert get_issues(@project.id).empty?
+      end
+    end
+
+    context "as a user with a project" do
+      should "return the project's issues" do
+        @project = Project.generate!
+        generate_user_and_login_for_project(@project)
+        User.current = @user
+        issue1 = Issue.generate_for_project!(@project)
+        issue2 = Issue.generate_for_project!(@project)
+
+        result = get_issues(@project.id)
+        assert_equal 2, result.size
+        assert result.include? issue1
+        assert result.include? issue2
+      end
+    end
+  end
 end

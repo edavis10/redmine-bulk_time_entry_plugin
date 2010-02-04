@@ -6,6 +6,7 @@ class BulkTimeEntriesController < ApplicationController
   before_filter :load_allowed_projects
 
   helper :custom_fields
+  include BulkTimeEntriesHelper
 
   protect_from_forgery :only => [:index, :save]
   
@@ -17,12 +18,8 @@ class BulkTimeEntriesController < ApplicationController
     end
   end
 
-  def get_issues(project_id)
-    @issues = Issue.find(:all, :conditions => { :project_id => project_id })
-  end
-  
   def load_assigned_issues
-    get_issues params[:project_id]
+    @issues = get_issues(params[:project_id])
     render(:update) do |page|
       page.replace_html params[:entry_id]+'_issues', :partial => 'issues_selector', :locals => { :issues => @issues, :rnd => params[:entry_id].split('_')[1]  }
     end

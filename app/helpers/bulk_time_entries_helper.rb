@@ -30,4 +30,13 @@ module BulkTimeEntriesHelper
     html << "</optgroup>"
     html
   end
+
+  def get_issues(project_id)
+    project = BulkTimeEntriesController.allowed_project?(project_id)
+    if project
+      project.issues.all
+    else
+      []
+    end
+  end
 end
