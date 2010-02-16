@@ -21,7 +21,7 @@ class BulkTimeEntriesController < ApplicationController
     @selected_project = BulkTimeEntriesController.allowed_project?(params[:project_id])
     render(:update) do |page|
       page.replace_html params[:entry_id]+'_issues', :partial => 'issues_selector', :locals => { :issues => @issues, :rnd => params[:entry_id].split('_')[1]  }
-      page.replace_html params[:entry_id]+'_activities', :partial => 'activities_selector', :locals => { :rnd => params[:entry_id].split('_')[1], :activities => @selected_project.activities  }
+      page.replace_html params[:entry_id]+'_activities', :partial => 'activities_selector', :locals => { :rnd => params[:entry_id].split('_')[1], :activities => (@selected_project.present? ? @selected_project.activities : [])  }
     end
   end
   

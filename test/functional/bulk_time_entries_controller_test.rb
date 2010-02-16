@@ -135,4 +135,39 @@ class BulkTimeEntriesControllerTest < ActionController::TestCase
       assert_select_rjs :replace, 'entry_1234', :text => /blank/
     end
   end
+
+  context "POST to :load_assigned_issues with an allowed project" do
+    setup do
+      @project = Project.generate!
+      generate_user_and_login_for_project(@project)
+    end
+
+    should "replace the issues selector" do
+      post :load_assigned_issues, :entry_id => '1234', :project_id => @project.id.to_s
+      assert_select_rjs :replace_html, '1234_issues'
+    end
+
+    should "replace the activities selector" do
+      post :load_assigned_issues, :entry_id => '1234', :project_id => @project.id.to_s
+      assert_select_rjs :replace_html, '1234_activities'
+    end
+  end
+
+  context "POST to :load_assigned_issues with an unallowed project" do
+    setup do
+      @project = Project.generate!
+      generate_user_and_login_for_project(@project)
+      @unallowed_project = Project.generate!
+    end
+
+    should "replace the issues selector with an empty select field" do
+      post :load_assigned_issues, :entry_id => '1234', :project_id => @unallowed_project.id.to_s
+      assert_select_rjs :replace_html, '1234_issues', :text => /no data to display/
+    end
+
+    should "replace the activities selector with an empty select field" do
+      post :load_assigned_issues, :entry_id => '1234', :project_id => @unallowed_project.id.to_s
+      assert_select_rjs :replace_html, '1234_activities', :text => /no data to display/
+    end
+  end
 end
