@@ -5,6 +5,7 @@ class BulkTimeEntriesController < ApplicationController
   before_filter :load_activities
   before_filter :load_allowed_projects
   before_filter :load_first_project
+  before_filter :check_for_no_projects
 
   helper :custom_fields
   include BulkTimeEntriesHelper
@@ -13,10 +14,6 @@ class BulkTimeEntriesController < ApplicationController
   
   def index
     @time_entries = [TimeEntry.new(:spent_on => Date.today.to_s)]
-
-    if @projects.empty?
-      render :action => 'no_projects'
-    end
   end
 
   def load_assigned_issues
@@ -82,6 +79,13 @@ class BulkTimeEntriesController < ApplicationController
 
   def load_first_project
     @first_project = @projects.sort_by(&:lft).first unless @projects.empty?
+  end
+
+  def check_for_no_projects
+    if @projects.empty?
+      render :action => 'no_projects'
+      return false
+    end
   end
 
   def self.allowed_project?(project_id)
