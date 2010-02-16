@@ -27,9 +27,8 @@
       <%= label_for_field :comments, rnd %>
       <%= f.text_field :comments, :size => 100, :maxlength => 255 %>
     </p>
-    <p>
-      <%= label_for_field :activity_id, rnd, :required => true %>
-      <%= f.select :activity_id, (@activities.collect {|p| [p.name, p.id]}) %>
+    <p id="entry_<%= rnd %>_activities">
+      <%= render :partial => 'activities_selector', :locals => {:rnd => rnd, :activities => @first_project.activities } %>
     </p>
     <% time_entry.custom_field_values.each do |value| %>
       <p><%= custom_field_tag_with_label "time_entries[#{rnd}]", value %></p>

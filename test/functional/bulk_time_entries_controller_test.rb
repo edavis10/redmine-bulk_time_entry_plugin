@@ -10,6 +10,7 @@ class BulkTimeEntriesControllerTest < ActionController::TestCase
 
   should_have_before_filter :load_activities
   should_have_before_filter :load_allowed_projects
+  should_have_before_filter :load_first_project
 
   context "GET to :index" do
     context "as a user without any projects" do
@@ -38,6 +39,7 @@ class BulkTimeEntriesControllerTest < ActionController::TestCase
       should_respond_with :success
       should_assign_to :time_entries
       should_assign_to :projects
+      should_assign_to :first_project
       should_render_template :index
     end
   end
