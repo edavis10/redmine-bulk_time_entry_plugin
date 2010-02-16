@@ -28,7 +28,19 @@ class BulkTimeEntriesController < ApplicationController
   
   def save
     if request.post? 
+      @unsaved_entries = {}
+      @saved_entries = {}
       @time_entries = params[:time_entries]
+
+      @time_entries.each_pair do |html_id, entry|
+        time_entry = TimeEntry.create_bulk_time_entry(entry)
+        if time_entry.new_record?
+          @unsaved_entries[html_id] = time_entry
+        else
+          @saved_entries[html_id] = time_entry
+        end
+      end
+      
       respond_to do |format|
         format.js {}
       end

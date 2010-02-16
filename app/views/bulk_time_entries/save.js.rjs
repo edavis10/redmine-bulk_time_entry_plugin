@@ -1,13 +1,12 @@
-@time_entries.each_pair do |html_id, entry|
-  @time_entry = TimeEntry.create_bulk_time_entry(entry)
-  if @time_entry.new_record?
-    page.replace "entry_#{html_id}", :partial => 'time_entry', :object => @time_entry
-  else
-    time_entry_target = if @time_entry.issue
-                          "#{h(@time_entry.project.name)} - #{h(@time_entry.issue.subject)}"
-                        else
-                          "#{h(@time_entry.project.name)}"
-                        end
-    page.replace_html "entry_#{html_id}", "<div class='flash notice'>#{l(:text_time_added_to_project, :count => @time_entry.hours, :target => time_entry_target)}#{" (#{@time_entry.comments})" unless @time_entry.comments.blank?}.</div>"
-  end
+@unsaved_entries.each do |html_id, entry|
+  page.replace "entry_#{html_id}", :partial => 'time_entry', :object => entry
+end
+
+@saved_entries.each do |html_id, entry|
+  time_entry_target = if entry.issue
+                        "#{h(entry.project.name)} - #{h(entry.issue.subject)}"
+                      else
+                        "#{h(entry.project.name)}"
+                      end
+  page.replace_html "entry_#{html_id}", "<div class='flash notice'>#{l(:text_time_added_to_project, :count => entry.hours, :target => time_entry_target)}#{" (#{entry.comments})" unless entry.comments.blank?}.</div>"
 end
