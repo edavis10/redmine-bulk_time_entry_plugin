@@ -4,6 +4,7 @@ class BulkTimeEntriesController < ApplicationController
   layout 'base'
   before_filter :load_activities
   before_filter :load_allowed_projects
+  before_filter :load_first_project
 
   helper :custom_fields
   include BulkTimeEntriesHelper
@@ -75,6 +76,10 @@ class BulkTimeEntriesController < ApplicationController
   def load_allowed_projects
     @projects = User.current.projects.find(:all,
       Project.allowed_to_condition(User.current, :log_time))
+  end
+
+  def load_first_project
+    @first_project = @projects.sort_by(&:lft).first unless @projects.empty?
   end
 
   def self.allowed_project?(project_id)
