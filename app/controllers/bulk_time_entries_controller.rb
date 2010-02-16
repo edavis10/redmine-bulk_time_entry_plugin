@@ -29,23 +29,10 @@ class BulkTimeEntriesController < ApplicationController
   def save
     if request.post? 
       @time_entries = params[:time_entries]
-
-      render :update do |page|
-        @time_entries.each_pair do |html_id, entry|
-          @time_entry = TimeEntry.create_bulk_time_entry(entry)
-          if @time_entry.new_record?
-            page.replace "entry_#{html_id}", :partial => 'time_entry', :object => @time_entry
-          else
-            time_entry_target = if @time_entry.issue
-                                  "#{h(@time_entry.project.name)} - #{h(@time_entry.issue.subject)}"
-                                else
-                                  "#{h(@time_entry.project.name)}"
-                                end
-            page.replace_html "entry_#{html_id}", "<div class='flash notice'>#{l(:text_time_added_to_project, :count => @time_entry.hours, :target => time_entry_target)}#{" (#{@time_entry.comments})" unless @time_entry.comments.blank?}.</div>"
-          end
-        end
+      respond_to do |format|
+        format.js {}
       end
-    end    
+    end
   end
     
   def add_entry
