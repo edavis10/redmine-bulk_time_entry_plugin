@@ -56,11 +56,7 @@ class BulkTimeEntriesController < ApplicationController
     
     @time_entry = TimeEntry.new(:spent_on => spent_on.to_s)
     respond_to do |format|
-      format.js do
-        render :update do |page| 
-          page.insert_html :bottom, 'entries', :partial => 'time_entry', :object => @time_entry
-        end
-      end
+      format.js {}
     end
   end
   
