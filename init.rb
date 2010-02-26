@@ -6,7 +6,7 @@ Redmine::Plugin.register :bulk_time_entry_plugin do
   name 'Bulk Time Entry'
   author 'Eric Davis'
   description 'This is a plugin to enter multiple time entries at one time.'
-  version '0.4.0'
+  version '0.5.0'
 
   requires_redmine :version_or_higher => '0.9.0'
   
