@@ -13,7 +13,7 @@ class BulkTimeEntriesController < ApplicationController
   protect_from_forgery :only => [:index, :save]
   
   def index
-    @time_entries = [TimeEntry.new(:spent_on => Date.today.to_s)]
+    @time_entries = [TimeEntry.new(:spent_on => today_with_time_zone.to_s)]
   end
 
   def load_assigned_issues
@@ -51,7 +51,7 @@ class BulkTimeEntriesController < ApplicationController
     rescue ArgumentError
       # Fall through
     end
-    spent_on ||= Date.today
+    spent_on ||= today_with_time_zone
     
     @time_entry = TimeEntry.new(:spent_on => spent_on.to_s)
     respond_to do |format|
@@ -79,6 +79,15 @@ class BulkTimeEntriesController < ApplicationController
       render :action => 'no_projects'
       return false
     end
+  end
+
+  # Returns the today's date using the User's time_zone
+  #
+  # @return [Date] today
+  def today_with_time_zone
+    time_proxy = Time.zone = User.current.time_zone
+    time_proxy ||= Time # In case the user has no time_zone
+    today = time_proxy.now.to_date
   end
 
   def self.allowed_project?(project_id)
