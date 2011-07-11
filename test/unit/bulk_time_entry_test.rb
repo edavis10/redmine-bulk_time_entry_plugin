@@ -1,7 +1,5 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-require 'fastercsv'
-
 # Failing records are tested in BulkTimeEntryTransaction since Rails
 # can't turn fixture transactions off for a single test case.
 class BulkTimeEntryTest < ActiveSupport::TestCase

@@ -1,7 +1,5 @@
 require 'redmine'
 
-config.gem 'fastercsv' if respond_to? :config
-
 Redmine::Plugin.register :bulk_time_entry_plugin do
   name 'Bulk Time Entry'
   author 'Eric Davis'
