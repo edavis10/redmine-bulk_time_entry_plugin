@@ -3,4 +3,4 @@ ko:
   label_bulk_time_entries: 다중 시간 입력
   label_bulk_time_add_another: 다른 항목 추가
   text_bulk_time_entry_permission: 시간을 기록할 권한이 없습니다.
-  text_time_added_to_project: "프로젝트에 {{count}} 시간을 기록했습니다 {{target}}."
+  text_time_added_to_project: "프로젝트에 %{count} 시간을 기록했습니다 %{target}."
