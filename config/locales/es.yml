@@ -1,0 +1,6 @@
+es:
+  bulk_time_entry_title: Cargar horas
+  label_bulk_time_entries: Cargar horas
+  label_bulk_time_add_another: Añadir más horas
+  text_bulk_time_entry_permission: No tienes permisos para cargar horas
+  text_time_added_to_project: "%{count} horas añadidas a %{target}"
