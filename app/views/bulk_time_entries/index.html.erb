@@ -1,11 +1,11 @@
 <h2><%= l(:label_bulk_time_entries) %></h2>
 
-<% remote_form_for :bulk_time_entry_title, @bulk_time_entry, :url => {:action => 'save'}, :html => {:class => 'tabular'} do |f| %>
+<% remote_form_for :bulk_time_entry_title, @bulk_time_entry, :url => {:action => 'create'}, :html => {:class => 'tabular'} do |f| %>
   <div id="entries">
     <%= render :partial => 'time_entry', :collection => @time_entries %>
   </div>
   <div id="add-entry">
-    <%= link_to_remote l(:label_bulk_time_add_another), :url => {:action => 'add_entry'}, :html => {:accesskey => 'a'}, :with => "'date='+ getLastTimeEntryDate()" %>
+    <%= link_to_remote l(:label_bulk_time_add_another), :url => {:action => 'new'}, :method => :get, :html => {:accesskey => 'a'}, :with => "'date='+ getLastTimeEntryDate()" %>
   </div>
   <br/>
   <%= submit_tag l(:button_save) %>
