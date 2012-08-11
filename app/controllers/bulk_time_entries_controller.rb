@@ -33,7 +33,7 @@ class BulkTimeEntriesController < ApplicationController
       else
         @saved_entries[html_id] = time_entry
       end
-    end
+    end unless params[:time_entries].blank?
 
     respond_to do |format|
       format.js {}
