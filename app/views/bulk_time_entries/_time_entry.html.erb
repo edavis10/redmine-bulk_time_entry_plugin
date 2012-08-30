@@ -4,7 +4,13 @@
   @object = time_entry 
   @object_name = 'time_entry' -%>
   <div class="box" id="entry_<%= rnd %>">
-    <%= error_messages_for 'time_entry', :object => time_entry %>
+	<% if @object.errors.any? %>
+  <ul>
+   <% @tobject.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+  </ul>
+<% end %>
     <p>
       <%= label_for_field :project_id, rnd, :required => true %>
       <% projects = project_tree_options_for_select(@projects, :selected => @first_project) %>
