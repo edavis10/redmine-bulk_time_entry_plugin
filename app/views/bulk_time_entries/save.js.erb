@@ -1,0 +1,7 @@
+<% @unsaved_entries.each do |html_id, entry| %>
+  $("#entry_<%= html_id %>").html("<%= escape_javascript(render :partial => 'time_entry', :locals => { @time_entry => entry } ) %>");
+<% end %>
+
+<% @saved_entries.each do |html_id, entry| %>
+  $("#entry_<%= html_id %>").html("<div class='flash notice'> <%= escape_javascript(l(:text_time_added_to_project, :count => entry.hours)) %>. <%= escape_javascript(entry.comments) unless entry.comments.blank? %></div>");
+<% end %>

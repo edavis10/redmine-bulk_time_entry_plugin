@@ -1,0 +1,6 @@
+ru:
+  bulk_time_entry_title: "Затраченное время"
+  label_bulk_time_entries: "Затраченное время"
+  label_bulk_time_add_another: "Добавить ещё"
+  text_bulk_time_entry_permission: "Для выполнения этой задачи нужен доступ уровня С"
+  text_time_added_to_project: "%{count} часов доавлено к проекту"

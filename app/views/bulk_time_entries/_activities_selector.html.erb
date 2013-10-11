@@ -1,6 +1,6 @@
       <%= label_for_field :activity_id, rnd, :required => true %>
       <% if activities.present? %>
-      <%= select_tag "time_entries[#{rnd}][activity_id]", options_from_collection_for_select(activities, :id, :name) %>
+      <%= select_tag "time_entries[#{rnd}][activity_id]", options_from_collection_for_select(activities, :id, :name), :required => true %>
       <% else %>
       <em><%= l(:label_no_data) %></em>
       <% end %>
