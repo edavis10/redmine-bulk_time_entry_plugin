@@ -1,7 +1,8 @@
-ActionController::Routing::Routes.draw do |map|
-  map.resources :bulk_time_entries,
-    :only => [:index, :new, :load_assigned_issues, :create],
-    :collection => {
-      :load_assigned_issues => :get
-    }
+RedmineApp::Application.routes.draw do
+  resources :bulk_time_entries,
+    :only => [:index, :new, :create] do
+    collection do
+      get 'load_assigned_issues'
+    end
+  end
 end

@@ -17,6 +17,9 @@ class BulkTimeEntriesController < ApplicationController
   def load_assigned_issues
     @issues = get_issues(params[:project_id])
     @selected_project = BulkTimeEntriesController.allowed_project?(params[:project_id])
+    @activities = @selected_project.present? ? @selected_project.activities : []
+    @entry_id = params[:entry_id].to_s
+    @rnd = @entry_id.split('_')[1]
     respond_to do |format|
       format.js {}
     end
@@ -41,16 +44,13 @@ class BulkTimeEntriesController < ApplicationController
   end
 
   def new
-    begin
-      spent_on = Date.parse(params[:date])
-    rescue ArgumentError
-      # Fall through
-    end
+    spent_on = Date.parse(params[:date]) rescue nil
     spent_on ||= today_with_time_zone
 
     @time_entry = TimeEntry.new(:spent_on => spent_on.to_s)
     respond_to do |format|
       format.js {}
+      format.html { redirect_to bulk_time_entries_path }
     end
   end
 

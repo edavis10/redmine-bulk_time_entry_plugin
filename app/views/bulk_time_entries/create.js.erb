@@ -1,0 +1,14 @@
+<% @unsaved_entries.each do |html_id, entry| %>
+  $('#entry_<%= html_id %>').replaceWith('<%= escape_javascript render partial: 'time_entry', object: entry %>');
+<% end %>
+
+<%
+  @saved_entries.each do |html_id, entry|
+  time_entry_target = if entry.issue
+                        "#{h(entry.project.name)} - #{h(entry.issue.subject)}"
+                      else
+                        "#{h(entry.project.name)}"
+                      end
+%>
+$('#entry_<%= html_id %>').html('<div class="flash notice"><%= escape_javascript l :text_time_added_to_project, count: entry.hours, target: time_entry_target %><%= escape_javascript " (#{h entry.comments})" unless entry.comments.blank? %></div>');
+<% end %>
