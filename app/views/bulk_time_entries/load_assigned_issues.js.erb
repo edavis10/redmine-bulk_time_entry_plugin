@@ -1,0 +1,3 @@
+$('#<%= escape_javascript @entry_id %>_issues').html('<%= escape_javascript render 'bulk_time_entries/issues_selector', issues: @issues, rnd: @rnd %>');
+$('#<%= escape_javascript @entry_id %>_activities').html('<%= escape_javascript render 'bulk_time_entries/activities_selector', activities: @activities, rnd: @rnd %>');
+$('#<%= escape_javascript @entry_id %>_issues select').focus();

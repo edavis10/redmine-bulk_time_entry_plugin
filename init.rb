@@ -13,9 +13,7 @@ Redmine::Plugin.register :bulk_time_entry_plugin do
 end
 
 # Patches to the Redmine core.
-require 'dispatcher'
-
-Dispatcher.to_prepare :bulk_time_entry_plugin do
+Rails.configuration.to_prepare do
   require_dependency 'time_entry'
   TimeEntry.send(:include, BulkTimeEntryPlugin::Patches::TimeEntryPatch)
 end

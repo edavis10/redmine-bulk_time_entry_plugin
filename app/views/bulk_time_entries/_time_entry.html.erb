@@ -1,15 +1,14 @@
-<% fields_for('time_entries[]', time_entry) do |f| %>
+<%= fields_for('time_entries[]', time_entry) do |f| %>
   <%# trick to have automatically populated html id/names of fields %>
   <% time_entry.id = rnd = rand(9999)
-  @object = time_entry 
+  @object = time_entry
   @object_name = 'time_entry' -%>
   <div class="box" id="entry_<%= rnd %>">
-    <%= error_messages_for 'time_entry', :object => time_entry %>
+    <%= error_messages_for 'time_entry', time_entry %>
     <p>
       <%= label_for_field :project_id, rnd, :required => true %>
       <% projects = project_tree_options_for_select(@projects, :selected => @first_project) %>
-      <%= f.select :project_id, projects, {}, 
-        { :onchange => "new Ajax.Request('#{url_for :action => 'load_assigned_issues'}', { parameters: { project_id: $F(this), entry_id: $(this).up(1).id } } )" } %>&nbsp;
+      <%= f.select :project_id, projects, {}, class: 'project-select', data: { issue_path: load_assigned_issues_bulk_time_entries_path } %>&nbsp;
     </p>
     <p id="entry_<%= rnd %>_issues">
     <% @issues = get_issues @first_project.id %>
@@ -36,5 +35,8 @@
   </div>
 <% end %>
 
-<%= javascript_tag("Element.scrollTo('time_entries_#{time_entry.id}_project_id')") %>
-<%= javascript_tag("Form.Element.focus('time_entries_#{time_entry.id}_project_id')") %>
+<%= javascript_tag do %>
+  var project_select = $('#time_entries_<%= time_entry.id %>_project_id').get(0);
+  project_select.scrollIntoView();
+  project_select.focus();
+<% end %>

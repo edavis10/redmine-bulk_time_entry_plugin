@@ -1,1 +1,0 @@
-page.insert_html :bottom, 'entries', :partial => 'time_entry', :object => @time_entry

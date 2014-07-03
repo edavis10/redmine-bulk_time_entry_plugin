@@ -1,11 +1,11 @@
 <h2><%= l(:label_bulk_time_entries) %></h2>
 
-<% remote_form_for :bulk_time_entry_title, @bulk_time_entry, :url => {:action => 'save'}, :html => {:class => 'tabular'} do |f| %>
+<%= form_for @bulk_time_entry, :as => :bulk_time_entry_title, :remote => true, :url => bulk_time_entries_path, :html => {:class => 'tabular'} do |f| %>
   <div id="entries">
     <%= render :partial => 'time_entry', :collection => @time_entries %>
   </div>
-  <div id="add-entry">
-    <%= link_to_remote l(:label_bulk_time_add_another), :url => {:action => 'add_entry'}, :html => {:accesskey => 'a'}, :with => "'date='+ getLastTimeEntryDate()" %>
+  <div id="add-entry" style="display: none;">
+    <%= link_to l(:label_bulk_time_add_another), new_bulk_time_entry_path, accesskey: 'a' %>
   </div>
   <br/>
   <%= submit_tag l(:button_save) %>
@@ -14,11 +14,21 @@
 <% html_title l(:label_bulk_time_entries) %>
 
 <script type="text/javascript">
-function getLastTimeEntryDate() {
-  if ($$('.spent_on').size() > 0) {
-    return $$('.spent_on').last().value;
-  } else {
-    return null;
-  } 
-}
+$('#add-entry').show();
+$('#add-entry a').on('click', function(){
+  var url = $(this).attr('href');
+  if ($('.spent_on').size() > 0) {
+    url += '?date=' + $('.spent_on').get(-1).value;
+  }
+  $.getScript(url);
+  return false;
+});
+
+$(document).on('change', 'select.project-select', function(e){
+  $.ajax($(this).data('issue-path'), {
+    type: 'GET',
+    dataType: 'script',
+    data: { project_id: $(this).val(), entry_id: $(this).parents('div.box').first().attr('id') }
+  });
+});
 </script>
