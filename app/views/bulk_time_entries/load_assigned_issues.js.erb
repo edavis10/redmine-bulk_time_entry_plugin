@@ -1,0 +1,2 @@
+$("#entry_<%= params[:entry_id] %>_issues").html("<%= escape_javascript(render :partial => 'issues_selector', :locals => { :issues => @issues, :rnd => params[:entry_id]}) %>");
+$("#entry_<%= params[:entry_id] %>_activities").html("<%= escape_javascript(render :partial => 'activities_selector', :locals => { :rnd => params[:entry_id], :activities => (@selected_project.present? ? @selected_project.activities : [])}) %>");

@@ -1,24 +1,17 @@
 <h2><%= l(:label_bulk_time_entries) %></h2>
+<% content_for(:header_tags) do %>
+<%= javascript_include_tag 'bulk_time_entry.js', :plugin => 'bulk_time_entry_plugin' %>
+<% end %>
 
-<% remote_form_for :bulk_time_entry_title, @bulk_time_entry, :url => {:action => 'save'}, :html => {:class => 'tabular'} do |f| %>
+<%= form_for :bulk_time_entry, url: {:action => 'save'}, :remote => true, html: {:id => 'time_entries' , :class => 'tabular'} do |f| %>
   <div id="entries">
-    <%= render :partial => 'time_entry', :collection => @time_entries %>
+    <%= render :partial => 'time_entry' %>
   </div>
   <div id="add-entry">
-    <%= link_to_remote l(:label_bulk_time_add_another), :url => {:action => 'add_entry'}, :html => {:accesskey => 'a'}, :with => "'date='+ getLastTimeEntryDate()" %>
+    <%= link_to l(:label_bulk_time_add_another), "#", {:id => "add_entry"} %>
   </div>
   <br/>
   <%= submit_tag l(:button_save) %>
 <% end %>
 
 <% html_title l(:label_bulk_time_entries) %>
-
-<script type="text/javascript">
-function getLastTimeEntryDate() {
-  if ($$('.spent_on').size() > 0) {
-    return $$('.spent_on').last().value;
-  } else {
-    return null;
-  } 
-}
-</script>

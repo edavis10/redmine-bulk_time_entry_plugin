@@ -2,5 +2,5 @@
 <% if @issues.nil? || @issues.empty? %>
 <em><%= l(:label_no_data) %></em>
 <% else %>
-<%= select_tag "time_entries[#{rnd}][issue_id]", grouped_options_for_issues(@issues), :style => 'max-width: 95%;' %>&nbsp;
+<%= select_tag "time_entries[#{rnd}][issue_id]", grouped_options_for_issues(@issues), :style => 'max-width: 95%;' %>
 <% end %>
