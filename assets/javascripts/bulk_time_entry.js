@@ -3,11 +3,11 @@
       return $('.spent_on').last().val();
     } else {
       return null;
-    } 
+    }
   }
 
 $(function() {
-  
+
   $("select[data-project-selector]").live('change',function() {
     var entry_id = $(this).data('project-selector');
     var project_id = this.value;
@@ -18,9 +18,10 @@ $(function() {
       data: { 'project_id':project_id, 'entry_id': entry_id }
       }
     )
+    .complete(function(){ $("select#time_entries_"+entry_id+"_issue_id").select2(); })
     .error(function(xhr, ajaxOptions, data){console.error("Error while get issues: "); console.debug(data);});
   });
-  
+
   $("a#add_entry").click(function(evt){
     evt.preventDefault();
     var d = getLastTimeEntryDate();
